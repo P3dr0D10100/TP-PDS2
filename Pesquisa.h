@@ -25,7 +25,7 @@ class Documento{
         void set_coord(vector<double> V);
         //Retorna a quantidade de vezes que a palavra p aparece no documento.
         int tf(string p);
-        //Retorna as coordenadas do documento atual.
+        //Retorna as coordenadas do documento atual
         vector<double> coordenadas();
     private:
         string nome_;
@@ -34,6 +34,7 @@ class Documento{
         multiset<string> tokens_;
         vector<double> coord_;
     friend class Teste;
+
 };
 
 class DB{
