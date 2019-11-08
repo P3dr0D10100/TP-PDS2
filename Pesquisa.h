@@ -56,6 +56,8 @@ class DB{
         void calcula_id_inv();
         //Calcula as coordenadas de um documento.
         void calcula_coord();
+
+friend class Teste;
 };
 
 
