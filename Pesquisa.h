@@ -51,7 +51,9 @@ class DB{
         vector<string> consulta(string Q);
     private:
         int N_docs_;
+        // map do nome dos documentos para a classe Documento.
         map<string,Documento> docs_;
+        // map de palavras para um set com o nome dos documentos.
         map<string,set<string>> id_inv_;
         //Calcula o índice invertido para a base de dados atual.
         void calcula_id_inv();
