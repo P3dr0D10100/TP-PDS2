@@ -31,7 +31,7 @@ class Documento{
         string nome_;
         string dir_;
         ifstream arquivo_;
-        multiset<string> tokens_;
+        map<string,int> tokens_;  // mapeia as palavras para nº de vezes que ela aparece no documento
         vector<double> coord_;
     friend class Teste;
 
