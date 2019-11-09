@@ -6,6 +6,7 @@
 #include <map>
 #include <vector>
 #include <deque>
+#include <unordered_set>
 
 using std::string;
 using std::ifstream;
@@ -13,7 +14,7 @@ using std::set;
 using std::multiset;
 using std::map;
 using std::vector;
-using std::deque;
+using std::unordered_multiset;
 
 class Documento{
     public:
@@ -31,7 +32,7 @@ class Documento{
         string nome_;
         string dir_;
         ifstream arquivo_;
-        map<string,int> tokens_;  // mapeia as palavras para nº de vezes que ela aparece no documento
+        unordered_multiset<string> tokens_;  
         vector<double> coord_;
     friend class Teste;
 
