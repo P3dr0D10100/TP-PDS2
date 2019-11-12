@@ -2,12 +2,12 @@
 #define DOCUMENTO_H
 #include <string>
 #include <fstream>
-#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 using std::string;
 using std::ifstream;
-using std::unordered_map;
+using std::unordered_multiset;
 using std::vector;
 
 class Documento{
@@ -26,7 +26,7 @@ class Documento{
         string nome_;
         string dir_;
         ifstream arquivo_;
-        unordered_map<string,int> tokens_;
+        unordered_multiset<string> tokens_;
         vector<double> coord_;
 };
 
