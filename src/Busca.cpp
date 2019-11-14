@@ -1,5 +1,6 @@
 #include "Busca.h"
 #include <math.h>
+#include <algorithm>
 
 MBus::MBus(std::vector<Documento> &doc){
     N_docs_ = doc.size();
