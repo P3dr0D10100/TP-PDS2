@@ -37,6 +37,19 @@ vector <string> MBus::consulta(string Q){
     for (int i=0; i<docs_.size(); i++){
         //calcular distância de Q até docs[i]
     }
-    sort (dist_Q_docs.begin(), dist_Q_docs.end());
+    sort (dist_Q_docs.rbegin(), dist_Q_docs.rend());
    
+}
+
+void MBus::inserir_doc(Documento doc){
+    docs_.push_back(doc);
+    N_docs_++;
+    for (auto &t : doc.tokens()){
+        id_inv_[t].insert(N_docs_-1);
+    }
+    calcula_coord();
+}
+
+void MBus::remover_doc(string Doc){
+
 }
