@@ -14,21 +14,22 @@ using std::vector;
 class MBus{
     public:
         //Constroi uma base de dados com os documentos de docs.
-        MBus(vector<Documento> docs);
+        MBus(vector<Documento> &docs);
         //Insere o documento doc na base de dados.
         void inserir_doc(Documento doc);
         //Remove o documento de nome "doc" da base de dados.
         void remover_doc(string doc);
-        //Atualiza do documento de nome "doc" na base de dados.
-        void att_doc(string doc);
+        //Atualiza o índice invertido e as coordenadas.
+        void att_doc();
         //Realiza uma busca pela palavra "Q" na base de dados.
         vector<string> consulta(string Q);
     private:
-        int N_docs;
-        //map do nome dos documentos para o objeto da classe Documento correspondente.
-        map<string,Documento> docs_;
-        //map de palavras para um set com o nome dos documentos.
-        map<string,set<string>> id_inv_;
+        int N_docs_;
+        //vector dos documetnos
+        vector<Documento> docs_;
+        //map de palavras para um set com o índice dos documentos.
+        map<string,set<int>> id_inv_;
+        
         void calcula_id_inv();
         //Calcula as coordenadas de um documento.
         void calcula_coord();

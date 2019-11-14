@@ -14,19 +14,19 @@ static int ids;
 
 class Documento{
     public:
-        //Inicializa o documento com nome "doc" e diretório "dir", preparando para a busca.
+        //Inicializa o documento com nome "doc" e diretï¿½rio "dir", preparando para a busca.
         Documento(string doc,string dir);
         //Retorna o nome do documento atual.
         string nome();
-        //Retorna os tokens do documento atual sem repetição.
-        unordered_multiset<string> tokens();
-        //Retorna a frequência da palavra P no documento atual.
+        //Retorna a frequï¿½ncia da palavra P no documento atual.
         int freq(string P);
         //Atribui ao documento atual as coordenadas contidas em V.
-        void set_coord(vector<double> V);
+        void set_coord(vector<double> &V) ;
         //Retorna as coordenadas do documento atual.
         vector<double> coord();
-        //Fecha o documento após o uso.
+
+        unordered_multiset<string> &tokens();
+        //Fecha o documento apï¿½s o uso.
         ~Documento();
     private:
         string nome_;
