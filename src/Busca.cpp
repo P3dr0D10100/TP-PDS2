@@ -51,5 +51,17 @@ void MBus::inserir_doc(Documento doc){
 }
 
 void MBus::remover_doc(string Doc){
-
+    bool achou = false;
+    for (int i=0; i<docs_.size(); i++){
+        if (docs_[i].nome() == Doc){
+            N_docs_--;
+            docs_.erase(docs_.begin()+i);
+            achou = true;
+        }
+    }
+    if (achou == false){
+        // mensagem de erro ou alguma coisa
+    }
+    calcula_coord();
+    
 }

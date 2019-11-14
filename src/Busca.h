@@ -25,7 +25,7 @@ class MBus{
         vector<string> consulta(string Q);
     private:
         int N_docs_;
-        //map do nome dos documentos para o objeto da classe Documento correspondente.
+        //vector dos documetnos
         vector<Documento> docs_;
         //map de palavras para um set com o índice dos documentos.
         map<string,set<int>> id_inv_;
