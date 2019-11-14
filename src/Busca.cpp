@@ -57,11 +57,17 @@ void MBus::remover_doc(string Doc){
             N_docs_--;
             docs_.erase(docs_.begin()+i);
             achou = true;
+            calcula_id_inv();
+            calcula_coord();
         }
     }
     if (achou == false){
         // mensagem de erro ou alguma coisa
     }
-    calcula_coord();
     
+}
+
+void MBus::att_doc(){
+    calcula_id_inv();
+    calcula_coord();
 }

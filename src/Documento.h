@@ -22,7 +22,7 @@ class Documento{
         void set_coord(vector<double> &V) ;
         //Retorna as coordenadas do documento atual.
         vector<double> coord();
-        
+
         unordered_multiset<string> &tokens();
         //Fecha o documento ap�s o uso.
         ~Documento();
