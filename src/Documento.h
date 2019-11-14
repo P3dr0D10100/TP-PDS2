@@ -12,17 +12,19 @@ using std::vector;
 
 class Documento{
     public:
-        //Inicializa o documento com nome "doc" e diretório "dir", preparando para a busca.
+        //Inicializa o documento com nome "doc" e diret�rio "dir", preparando para a busca.
         Documento(string doc,string dir);
         //Retorna o nome do documento atual.
         string nome();
-        //Retorna a frequência da palavra P no documento atual.
+        //Retorna a frequ�ncia da palavra P no documento atual.
         int freq(string P);
         //Atribui ao documento atual as coordenadas contidas em V.
         void set_coord(vector<double> &V) ;
         //Retorna as coordenadas do documento atual.
         vector<double> coord();
         unordered_multiset<string> &tokens();
+        //Fecha o documento ap�s o uso.
+        ~Documento();
     private:
         string nome_;
         string dir_;
