@@ -8,6 +8,7 @@
 using std::string;
 using std::ifstream;
 using std::unordered_multiset;
+using std::unordered_set;
 using std::vector;
 
 class Documento{
@@ -16,6 +17,8 @@ class Documento{
         Documento(string doc,string dir);
         //Retorna o nome do documento atual.
         string nome();
+        //Retorna os tokens do documento atual sem repetição.
+        unordered_set<string> tokens();
         //Retorna a frequência da palavra P no documento atual.
         int freq(string P);
         //Atribui ao documento atual as coordenadas contidas em V.
