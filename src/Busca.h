@@ -19,7 +19,7 @@ class MBus{
         void inserir_doc(Documento doc);
         //Remove o documento de nome "doc" da base de dados.
         void remover_doc(string doc);
-        //Atualiza o índice invertido e as coordenadas.
+        //Atualiza o Ã­ndice invertido e as coordenadas.
         void att_doc();
         //Realiza uma busca pela palavra "Q" na base de dados.
         vector<string> consulta(string Q);
@@ -29,7 +29,7 @@ class MBus{
         vector<Documento> docs_;
         //map de palavras para um set com o índice dos documentos.
         map<string,set<int>> id_inv_;
-        
+        //Calcula o índice invertido para a base de dados atual.
         void calcula_id_inv();
         //Calcula as coordenadas de um documento.
         void calcula_coord();
