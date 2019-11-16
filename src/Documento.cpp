@@ -30,4 +30,10 @@ Documento::Documento(string doc,string dir)
         tok.clear();
     }
     id_ = ids;
+    ids++;
+}
+
+Documento::~Documento()
+{
+    arquivo_.close();
 }
