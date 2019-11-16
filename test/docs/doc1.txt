@@ -1,0 +1,8 @@
+Este e um arquivo de teste para o programa de busca.******
+Este arquivo contem algumas palavras no padrao esperado de 
+entrada e sera utilizado para o teste de unidade no------- 
+programa. Sera testada a entrada e os calculos do/////////
+indice invertido alem da busca (pesquisa).\\\\\\\\////////
+Aqui temos 50 palavras (e 2 numeros).!@#$%%&*()))))))))___
+*---------------------------------------------------------*
+!@#$%%&*(){}[]<>::;;;;;;,,,,,|||\\"''"====--+++******//---
