@@ -16,6 +16,10 @@ class Teste{
         {
             return doc.id_;
         }
+        static bool arq_aberto(const Documento& doc)
+        {
+            return doc.arquivo_.is_open();
+        }
         static unordered_multiset<string> tokens(const Documento& doc)
         {
             return doc.tokens_;
@@ -24,5 +28,8 @@ class Teste{
         {
             return doc.coord_;
         }
+        static void fechar_arq(Documento& doc)
+        {
+            doc.arquivo_.close();
+        }
 };
-
