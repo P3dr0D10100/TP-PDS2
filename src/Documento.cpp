@@ -1,5 +1,6 @@
 #include "Documento.h"
 #include <cctype>
+#include <assert.h>
 
 Documento::Documento(string doc,string dir)
 {
@@ -8,7 +9,7 @@ Documento::Documento(string doc,string dir)
     nome_ = doc;
     dir_ = dir;
     arquivo_.open(dir_);
-    _ASSERT(arquivo_.is_open());
+    assert(arquivo_.is_open());
     while(std::getline(arquivo_,lin))
     {
         tok.reserve(lin.size());
