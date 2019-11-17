@@ -21,11 +21,11 @@ class Documento{
         //Retorna a frequência da palavra P no documento atual.
         int freq(string P);
         //Atribui ao documento atual as coordenadas contidas em V.
-        void set_coord(vector<double> &V) ;
+        void set_coord(vector<double>& V) ;
         //Retorna as coordenadas do documento atual.
         vector<double> coord();
         //Retorna os tokens gerados a partir do documento atual.
-        unordered_multiset<string> &tokens();
+        unordered_multiset<string>& tokens();
         //Fecha o documento após o uso.
         ~Documento();
     private:
