@@ -1,4 +1,4 @@
-este
+este 
 e 
 um 
 arquivo 
@@ -9,7 +9,7 @@ o
 programa 
 de 
 busca
-este
+este 
 arquivo 
 contem 
 algumas 
@@ -43,7 +43,7 @@ alem
 da 
 busca 
 pesquisa
-aqui
+aqui 
 temos
 50 
 palavras 

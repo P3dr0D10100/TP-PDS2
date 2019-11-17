@@ -1,4 +1,4 @@
-UM**arquivo/para- teste com $simbolos%#especiais, e 
+UM** arquivo/ para- teste com $simbolos%# especiais, e 
 pontuacao! &Aqui tambem serao (testadas) a entrada
-a pesquisa, e outros?! OK! TeStEs, gUaRdA-ChuVA.
+a pesquisa, e outros?! OK! TeStE, gUaRdA-ChuVA.
 UmA ultima linH'A paRa "#testar", ok! 1 2 3 4 5 6
