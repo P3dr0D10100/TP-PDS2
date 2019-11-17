@@ -85,6 +85,21 @@ int Documento::freq(string p)
     return tokens_.count(p);
 }
 
+void Documento::set_coord(vector<double>& V)
+{
+    coord_ = V;
+}
+
+vector<double> Documento::coord()
+{
+    return coord_;
+}
+
+unordered_multiset<string>& Documento::tokens()
+{
+    return tokens_;
+}
+
 Documento::~Documento()
 {
     arquivo_.close();

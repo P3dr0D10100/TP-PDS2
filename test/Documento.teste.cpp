@@ -255,3 +255,60 @@ TEST_SUITE("Testando o método 'freq':")
         CHECK(doc.freq("no") == 2);
     }
 }
+
+TEST_CASE("Testando o método 'set_coord':")
+{
+    vector<double> v1{1,0.5,-3.2,0.3,-3.7,0};
+    vector<double> v2{1.9,2.3,-7.3,0.27,1.2,0.5};
+    vector<double> v3{1,2,3,4};
+    vector<double> v4,coord;
+    Documento d1("Teste"),d2("ok"),d3("d1","docs/doc.txt",1),d4("d2","docs/d2.txt",2);
+    d1.set_coord(v1);
+    d2.set_coord(v2);
+    d3.set_coord(v3);
+    d4.set_coord(v2);
+    CHECK(Teste::coord(d1) == v1);
+    CHECK(Teste::coord(d2) == v2);
+    CHECK(Teste::coord(d3) == v3);
+    CHECK(Teste::coord(d4) == v2);
+    d4.set_coord(v1);
+    CHECK(Teste::coord(d4) == v1);
+    d1.set_coord(v4);
+    CHECK(Teste::coord(d1) == v4);
+}
+
+TEST_CASE("Testando o método 'coord':")
+{
+    vector<double> v1{1,0.5,-3.2,0.3,-3.7,0};
+    vector<double> v2{1.9,2.3,-7.3,0.27,1.2,0.5};
+    vector<double> v3{1,2,3,4};
+    vector<double> v4,coord;
+    Documento d1("Teste"),d2("ok"),d3("d1","docs/doc.txt",1),d4("d2","docs/d2.txt",2);
+    d1.set_coord(v1);
+    d2.set_coord(v2);
+    d3.set_coord(v3);
+    d4.set_coord(v2);
+    coord = d1.coord();
+    CHECK(coord == v1);
+    coord = d2.coord();
+    CHECK(coord == v2);
+    coord = d3.coord();
+    CHECK(coord == v3);
+    coord = d4.coord();
+    CHECK(coord == v2);
+    d4.set_coord(v1);
+    coord = d4.coord();
+    CHECK(coord == v1);
+    d1.set_coord(v4);
+    coord = d1.coord();
+    CHECK(coord == v4);
+}
+
+TEST_CASE("Testando o método 'tokens':")
+{
+    Documento d1("Mais um teste!"),d2("","docs/vazio.txt",0),d3("d1","docs/doc.txt",1),d4("d2","docs/doc1.txt",2);
+    CHECK(d1.tokens() == Teste::tokens(d1));
+    CHECK(d2.tokens() == Teste::tokens(d2));
+    CHECK(d3.tokens() == Teste::tokens(d3));
+    CHECK(d4.tokens() == Teste::tokens(d4));
+}
