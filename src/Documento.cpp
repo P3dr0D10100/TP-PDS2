@@ -1,5 +1,6 @@
 #include "Documento.h"
 #include <cctype>
+#include <exception>
 #include <assert.h>
 
 Documento::Documento(string doc,string dir,int id)
@@ -9,6 +10,10 @@ Documento::Documento(string doc,string dir,int id)
     nome_ = doc;
     dir_ = dir;
     arquivo_.open(dir_);
+    if(!arquivo_.is_open())
+    {
+        throw std::invalid_argument("Nome de arquivo ou diretório inválido.");
+    }
     assert(arquivo_.is_open());
     while(std::getline(arquivo_,lin))
     {
@@ -20,7 +25,6 @@ Documento::Documento(string doc,string dir,int id)
                 tok.shrink_to_fit();
                 if(tok != "")
                 {
-                    tok.shrink_to_fit();
                     tokens_.insert(tok);
                     tok.clear();
                     tok.reserve(lin.size() - i);
@@ -38,6 +42,37 @@ Documento::Documento(string doc,string dir,int id)
         tok.clear();
     }
     id_ = id;
+}
+
+Documento::Documento(string str)
+{
+    string tok;
+    int i;
+    nome_ = "Query";
+    dir_ = "";
+    id_ = -1;
+    tok.reserve(str.size());
+    for(i = 0; i < str.size() + 1; i++)
+    {
+        if(str[i] == ' ' || str[i] == '\0')
+        {
+            tok.shrink_to_fit();
+            if(tok != "")
+            {
+                tokens_.insert(tok);
+                tok.clear();
+                tok.reserve(str.size() - i);
+            }else
+            {
+                tok.clear();
+                tok.reserve(str.size() + 1);
+            }
+        }else
+        if(isalnum(str[i]))
+        {
+            tok.push_back(tolower(str[i]));
+        }
+    }
 }
 
 Documento::~Documento()

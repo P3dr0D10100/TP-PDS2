@@ -158,4 +158,68 @@ TEST_SUITE("Testes para o construtor da classe Documento:")
             format.close();
         }
     }
+    TEST_CASE("Construindo a partir de strings:")
+    {
+        string s1,s2,s3,s4;
+        s1 = "TeStanDO a ConstruCao d-e #DoCuMento a partir de \"strings\"! (ok)";
+        s2 = "OUTRO teste a partir dE 'StringS': 1, 2, 3, 4";
+        s3 = "Mais um #TESTE com UmA 'string'@#%!";
+        s4 = "CRiAndo maIS uma STRING % e exercitando a CRIATIVIDADE...";
+        SUBCASE("s1:")
+        {
+            unordered_multiset<string> res{"testando","a","construcao","de","documento","a","partir","de","strings","ok"};
+            unordered_multiset<string> toks;
+            Documento doc(s1);
+            CHECK(Teste::nome(doc) == "Query");
+            CHECK(Teste::dir(doc) == "");
+            CHECK(Teste::id(doc) == -1);
+            CHECK(Teste::arq_aberto(doc) == false);
+            toks = Teste::tokens(doc);
+            REQUIRE(toks.empty() == false);
+            CHECK(toks.size() == 10);
+            CHECK(toks == res);
+        }
+        SUBCASE("s2:")
+        {
+            unordered_multiset<string> res{"outro","teste","a","partir","de","strings","1","2","3","4"};
+            unordered_multiset<string> toks;
+            Documento doc(s2);
+            CHECK(Teste::nome(doc) == "Query");
+            CHECK(Teste::dir(doc) == "");
+            CHECK(Teste::id(doc) == -1);
+            CHECK(Teste::arq_aberto(doc) == false);
+            toks = Teste::tokens(doc);
+            REQUIRE(toks.empty() == false);
+            CHECK(toks.size() == 10);
+            CHECK(toks == res);
+        }
+        SUBCASE("s3:")
+        {
+            unordered_multiset<string> res{"mais","um","teste","com","uma","string"};
+            unordered_multiset<string> toks;
+            Documento doc(s3);
+            CHECK(Teste::nome(doc) == "Query");
+            CHECK(Teste::dir(doc) == "");
+            CHECK(Teste::id(doc) == -1);
+            CHECK(Teste::arq_aberto(doc) == false);
+            toks = Teste::tokens(doc);
+            REQUIRE(toks.empty() == false);
+            CHECK(toks.size() == 6);
+            CHECK(toks == res);
+        }
+        SUBCASE("s4:")
+        {
+            unordered_multiset<string> res{"criando","mais","uma","string","e","exercitando","a","criatividade"};
+            unordered_multiset<string> toks;
+            Documento doc(s4);
+            CHECK(Teste::nome(doc) == "Query");
+            CHECK(Teste::dir(doc) == "");
+            CHECK(Teste::id(doc) == -1);
+            CHECK(Teste::arq_aberto(doc) == false);
+            toks = Teste::tokens(doc);
+            REQUIRE(toks.empty() == false);
+            CHECK(toks.size() == 8);
+            CHECK(toks == res);
+        }
+    } 
 }
