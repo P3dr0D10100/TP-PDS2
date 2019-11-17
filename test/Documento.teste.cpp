@@ -223,3 +223,35 @@ TEST_SUITE("Testes para o construtor da classe Documento:")
         }
     } 
 }
+
+TEST_CASE("Testando o método 'nome':")
+{
+    Documento d1("Teste"),d2("d1","docs/doc1.txt",1),d3("","docs/vazio.txt",0),d4("d2","docs/d2.txt",2);
+    CHECK(d1.nome() == Teste::nome(d1));
+    CHECK(d2.nome() == Teste::nome(d2));
+    CHECK(d3.nome() == Teste::nome(d3));
+    CHECK(d4.nome() == Teste::nome(d4));
+}
+
+TEST_SUITE("Testando o método 'freq':")
+{
+    TEST_CASE("doc.txt:")
+    {
+        Documento doc("d1","docs/doc.txt",0);
+        CHECK(doc.freq("teste") == 2);
+        CHECK(doc.freq("1") == 1);
+        CHECK(doc.freq("um") == 1);
+        CHECK(doc.freq("guarda-chuva") == 0);
+        CHECK(doc.freq("") == 0);
+        CHECK(doc.freq("a") == 2);
+    }
+    TEST_CASE("doc1.txt:")
+    {
+        Documento doc("d2","docs/doc1.txt",0);
+        CHECK(doc.freq("e") == 4);
+        CHECK(doc.freq("da") == 1);
+        CHECK(doc.freq("*/") == 0);
+        CHECK(doc.freq("unidade") == 1);
+        CHECK(doc.freq("no") == 2);
+    }
+}

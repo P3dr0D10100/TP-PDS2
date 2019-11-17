@@ -75,6 +75,16 @@ Documento::Documento(string str)
     }
 }
 
+string Documento::nome()
+{
+    return this->nome_;
+}
+
+int Documento::freq(string p)
+{
+    return tokens_.count(p);
+}
+
 Documento::~Documento()
 {
     arquivo_.close();
