@@ -13,9 +13,7 @@ serao
 testadas
 a 
 entrada 
-a 
 pesquisa 
-e 
 outros 
 ok 
 testes
@@ -25,7 +23,6 @@ ultima
 linha 
 para 
 testar 
-ok 
 1 
 2 
 3 
