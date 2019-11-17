@@ -30,12 +30,20 @@ class Teste{
         }
 };
 
+static int ids = 1;
+
+//Este teste apenas habilita o uso da acentuação no windows.
+TEST_CASE("Acentos:")
+{
+    setlocale(LC_ALL,"Portuguese");
+}
+
 TEST_SUITE("Testes para o construtor da classe Documento:")
 {
     TEST_CASE("Arquivo vazio:")
     {
         string d = "docs/vazio.txt";
-        Documento doc("",d);
+        Documento doc("",d,ids);
         CHECK(Teste::nome(doc) == "");
         CHECK(Teste::dir(doc) == d);
         CHECK(Teste::id(doc) == ids);
@@ -46,6 +54,7 @@ TEST_SUITE("Testes para o construtor da classe Documento:")
         vector<double> crd = Teste::coord(doc);
         CHECK(crd.empty() == true);
         CHECK(crd.size() == 0);
+        ids++;
     }
     TEST_CASE("Arquivos não-vazios:")
     {
@@ -57,88 +66,91 @@ TEST_SUITE("Testes para o construtor da classe Documento:")
         {
             nome = "d1";
             d = "docs/doc.txt";
-            Documento doc(nome,d);
+            Documento doc(nome,d,ids);
             CHECK(Teste::nome(doc) == "d1");
             CHECK(Teste::dir(doc) == d);
             CHECK(Teste::id(doc) == ids);
             REQUIRE(Teste::arq_aberto(doc) == true);
             toks = Teste::tokens(doc);
             REQUIRE(toks.empty() == false);
-            CHECK(toks.size() == 34);
             format.open("docs/f1.txt");
             while(format >> tok)
             {
                 res.insert(tok);
             }
+            REQUIRE(toks.size() == res.size());
             CHECK(toks == res);
             crd = Teste::coord(doc);
             CHECK(crd.empty() == true);
             CHECK(crd.size() == 0);
             format.close();
+            ids++;
         }
         SUBCASE("doc1.txt")
         {
             nome = "d2";
             d = "docs/doc1.txt";
-            Documento doc(nome,d);
+            Documento doc(nome,d,ids);
             CHECK(Teste::nome(doc) == nome);
             CHECK(Teste::dir(doc) == d);
             CHECK(Teste::id(doc) == ids);
             REQUIRE(Teste::arq_aberto(doc) == true);
             toks = Teste::tokens(doc);
             REQUIRE(toks.empty() == false);
-            CHECK(toks.size() == 52);
             format.open("docs/f2.txt");
             while(format >> tok)
             {
                 res.insert(tok);
             }
+            REQUIRE(toks.size() == res.size());
             CHECK(toks == res);
             crd = Teste::coord(doc);
             CHECK(crd.empty() == true);
             CHECK(crd.size() == 0);
             format.close();
+            ids++;
         }
         SUBCASE("d2.txt")
         {
             nome = "d3";
             d = "docs/d2.txt";
-            Documento doc(nome,d);
+            Documento doc(nome,d,ids);
             CHECK(Teste::nome(doc) == nome);
             CHECK(Teste::dir(doc) == d);
             CHECK(Teste::id(doc) == ids);
             REQUIRE(Teste::arq_aberto(doc) == true);
             toks = Teste::tokens(doc);
             REQUIRE(toks.empty() == false);
-            CHECK(toks.size() == 19);
             format.open("docs/f3.txt");
             while(format >> tok)
             {
                 res.insert(tok);
             }
+            REQUIRE(toks.size() == res.size());
             CHECK(toks == res);
             crd = Teste::coord(doc);
             CHECK(crd.empty() == true);
             CHECK(crd.size() == 0);
             format.close();
+            ids++;
         }
         SUBCASE("doc3.txt")
         {
             nome = "d4";
             d = "docs/doc3.txt";
-            Documento doc(nome,d);
+            Documento doc(nome,d,ids);
             CHECK(Teste::nome(doc) == nome);
             CHECK(Teste::dir(doc) == d);
             CHECK(Teste::id(doc) == ids);
             REQUIRE(Teste::arq_aberto(doc) == true);
             toks = Teste::tokens(doc);
             REQUIRE(toks.empty() == false);
-            CHECK(toks.size() == 17);
             format.open("docs/f4.txt");
             while(format >> tok)
             {
                 res.insert(tok);
             }
+            REQUIRE(toks.size() == res.size());
             CHECK(toks == res);
             crd = Teste::coord(doc);
             CHECK(crd.empty() == true);
