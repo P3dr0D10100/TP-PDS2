@@ -2,7 +2,7 @@
 #include <cctype>
 #include <assert.h>
 
-Documento::Documento(string doc,string dir)
+Documento::Documento(string doc,string dir,int id)
 {
     string lin,tok;
     int i;
@@ -29,8 +29,7 @@ Documento::Documento(string doc,string dir)
         }
         tok.clear();
     }
-    id_ = ids;
-    ids++;
+    id_ = id;
 }
 
 Documento::~Documento()
