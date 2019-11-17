@@ -10,12 +10,10 @@ using std::ifstream;
 using std::unordered_multiset;
 using std::vector;
 
-static int ids;
-
 class Documento{
     public:
-        //Inicializa o documento com nome "doc" e diretório "dir", preparando para a busca.
-        Documento(string doc,string dir);
+        //Inicializa o documento com nome "doc", diretório "dir" e identificador id, preparando para a busca.
+        Documento(string doc,string dir,int id);
         //Retorna o nome do documento atual.
         string nome();
         //Retorna a frequência da palavra P no documento atual.
