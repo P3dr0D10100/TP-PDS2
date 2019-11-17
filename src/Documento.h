@@ -14,6 +14,8 @@ class Documento{
     public:
         //Inicializa o documento com nome "doc", diretório "dir" e identificador id, preparando para a busca.
         Documento(string doc,string dir,int id);
+        //Inicializa um objeto da classe documento a partir da string "str".
+        Documento(string str);
         //Retorna o nome do documento atual.
         string nome();
         //Retorna a frequência da palavra P no documento atual.
