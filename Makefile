@@ -1,5 +1,6 @@
+Project_dir = ${shell cd}
 CC = g++
-CFLAGS = -std=c++14 -Wall -ggdb
+CFLAGS = -std=c++14 -Wall -ggdb -I ${Project_dir}
 
 all: main Teste
 	del bin\*.o
