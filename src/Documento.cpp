@@ -18,9 +18,17 @@ Documento::Documento(string doc,string dir,int id)
             if(lin[i] == ' ' || lin[i] == '\0')
             {
                 tok.shrink_to_fit();
-                tokens_.insert(tok);
-                tok.clear();
-                tok.reserve(lin.size() - i);
+                if(tok != "")
+                {
+                    tok.shrink_to_fit();
+                    tokens_.insert(tok);
+                    tok.clear();
+                    tok.reserve(lin.size() - i);
+                }else
+                {
+                    tok.clear();
+                    tok.reserve(lin.size() - i);
+                }
             }else 
             if(isalnum(lin[i]))
             {
