@@ -26,9 +26,9 @@ void MBus::calcula_coord(){
     }
 }
 
-vector <string> MBus::consulta(string Q){
-    //primeiro separar a string Q em tokens: unordered_multiset <string> Qtolkens
-    unordered_multiset <string> Qtokens;
+vector <string> MBus::consulta(Documento &Q){
+    Q.tokens();
+    
     vector <double> QW;
     for (auto &t : id_inv_){
         QW.push_back( log(N_docs_ / t.second.size()) * Qtokens.count(t.first));
