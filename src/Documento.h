@@ -26,6 +26,9 @@ class Documento{
         vector<double> coord();
         //Retorna os tokens gerados a partir do documento atual.
         unordered_multiset<string>& tokens();
+        //Atualiza o documento atual (realiza nova leitura).
+        //Precondição: o objeto foi criado a partir de um documento.
+        void atualiza_doc();
         //Fecha o documento após o uso.
         ~Documento();
     private:

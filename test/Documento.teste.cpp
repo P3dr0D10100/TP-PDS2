@@ -28,6 +28,13 @@ class Teste{
         {
             return doc.coord_;
         }
+        /*Este método é utilizado para testar a atualização de documentos,
+        a partir da alteração do diretorio do arquivo aberto atualmente na 
+        classe Documento.*/
+        static void altera_arq(Documento& doc,const string dir)
+        {
+            doc.dir_ = dir;
+        }
 };
 
 static int ids = 1;
@@ -311,4 +318,138 @@ TEST_CASE("Testando o método 'tokens':")
     CHECK(d2.tokens() == Teste::tokens(d2));
     CHECK(d3.tokens() == Teste::tokens(d3));
     CHECK(d4.tokens() == Teste::tokens(d4));
+}
+
+TEST_SUITE("Testando o método 'atualiza_doc':")
+{
+    TEST_CASE("Alterando documentos sem coordenadas atribuídas:")
+    {
+        Documento d1("d1","docs/doc1.txt",1),d2("d2","docs/doc3.txt",2);
+        string att1 = "docs/d2.txt",att2 = "docs/doc.txt",nome_old,tok;
+        int id_old;
+        ifstream in;
+        unordered_multiset<string> res,toks;
+        nome_old = Teste::nome(d1);
+        id_old = Teste::id(d1);
+        in.open("docs/f3.txt");
+        Teste::altera_arq(d1,att1);
+        d1.atualiza_doc();
+        CHECK(Teste::nome(d1) == nome_old);
+        CHECK(Teste::id(d1) == id_old);
+        REQUIRE(Teste::arq_aberto(d1) == true);
+        while(in >> tok)
+        {
+            res.insert(tok);
+        }
+        toks = Teste::tokens(d1);
+        REQUIRE(toks.size() == res.size());
+        CHECK(toks == res);
+        CHECK(Teste::coord(d1).empty() == true);
+        CHECK(Teste::coord(d1).size() == 0);
+        in.close();
+        res.clear();
+        nome_old = Teste::nome(d2);
+        id_old = Teste::id(d2);
+        in.open("docs/f1.txt");
+        Teste::altera_arq(d2,att2);
+        d2.atualiza_doc();
+        CHECK(Teste::nome(d2) == nome_old);
+        CHECK(Teste::id(d2) == id_old);
+        REQUIRE(Teste::arq_aberto(d2) == true);
+        while(in >> tok)
+        {
+            res.insert(tok);
+        }
+        toks = Teste::tokens(d2);
+        REQUIRE(toks.size() == res.size());
+        CHECK(toks == res);
+        CHECK(Teste::coord(d2).empty() == true);
+        CHECK(Teste::coord(d2).size() == 0);
+        in.close();
+    }
+    TEST_CASE("Alterando documentos com coordenadas atribuídas:")
+    {
+        Documento d1("d1","docs/d2.txt",1),d2("d2","docs/doc.txt",2);
+        vector<double> v1{1.2,0.6,-3.4,0},v2{0,0.5,-0.3,0.25};
+        string att1 = "docs/doc3.txt",att2 = "docs/doc1.txt",nome_old,tok;
+        int id_old;
+        ifstream in;
+        unordered_multiset<string> res,toks;
+        nome_old = Teste::nome(d1);
+        id_old = Teste::id(d1);
+        in.open("docs/f4.txt");
+        d1.set_coord(v1);
+        d2.set_coord(v2);
+        Teste::altera_arq(d1,att1);
+        d1.atualiza_doc();
+        CHECK(Teste::nome(d1) == nome_old);
+        CHECK(Teste::id(d1) == id_old);
+        REQUIRE(Teste::arq_aberto(d1) == true);
+        while(in >> tok)
+        {
+            res.insert(tok);
+        }
+        toks = Teste::tokens(d1);
+        REQUIRE(toks.size() == res.size());
+        CHECK(toks == res);
+        CHECK(Teste::coord(d1).empty() == true);
+        CHECK(Teste::coord(d1).size() == 0);
+        in.close();
+        res.clear();
+        nome_old = Teste::nome(d2);
+        id_old = Teste::id(d2);
+        in.open("docs/f2.txt");
+        Teste::altera_arq(d2,att2);
+        d2.atualiza_doc();
+        CHECK(Teste::nome(d2) == nome_old);
+        CHECK(Teste::id(d2) == id_old);
+        REQUIRE(Teste::arq_aberto(d2) == true);
+        while(in >> tok)
+        {
+            res.insert(tok);
+        }
+        toks = Teste::tokens(d2);
+        REQUIRE(toks.size() == res.size());
+        CHECK(Teste::coord(d2).empty() == true);
+        CHECK(Teste::coord(d2).size() == 0);
+        in.close();
+    }
+    TEST_CASE("Alterações com arquivos vazios:")
+    {
+        Documento d("d1","docs/doc.txt",1),vazio("","docs/vazio.txt",0);
+        vector<double> v{1,2,3,4};
+        string nome_old,tok;
+        int id_old;
+        ifstream in;
+        unordered_multiset<string> res,toks;
+        nome_old = Teste::nome(d);
+        id_old = Teste::id(d);
+        Teste::altera_arq(d,"docs/vazio.txt");
+        d.atualiza_doc();
+        CHECK(Teste::nome(d) == nome_old);
+        CHECK(Teste::id(d) == id_old);
+        REQUIRE(Teste::arq_aberto(d) == true);
+        toks = Teste::tokens(d);
+        REQUIRE(toks.empty() == true);
+        CHECK(toks.size() == 0);
+        CHECK(Teste::coord(d).empty() == true);
+        CHECK(Teste::coord(d).size() == 0);
+        nome_old = Teste::nome(vazio);
+        id_old = Teste::id(vazio);
+        Teste::altera_arq(vazio,"docs/doc.txt");
+        vazio.atualiza_doc();
+        in.open("docs/f1.txt");
+        CHECK(Teste::nome(vazio) == nome_old);
+        CHECK(Teste::id(vazio) == id_old);
+        REQUIRE(Teste::arq_aberto(vazio) == true);
+        while(in >> tok)
+        {
+            res.insert(tok);
+        }
+        toks = Teste::tokens(vazio);
+        REQUIRE(toks.size() == res.size());
+        CHECK(Teste::coord(vazio).empty() == true);
+        CHECK(Teste::coord(vazio).size() == 0);
+        in.close();
+    }
 }
