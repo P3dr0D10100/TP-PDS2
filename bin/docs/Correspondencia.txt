@@ -1,0 +1,4 @@
+doc.txt = f1.txt
+doc1.txt = f2.txt
+d2.txt = f3.txt
+doc3.txt = f4.txt
