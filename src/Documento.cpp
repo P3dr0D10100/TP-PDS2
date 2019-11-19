@@ -85,7 +85,7 @@ int Documento::freq(string p)
     return tokens_.count(p);
 }
 
-void Documento::set_coord(vector<double>& V)
+void Documento::Set_coord(vector<double>& V)
 {
     coord_ = V;
 }
@@ -95,12 +95,12 @@ vector<double> Documento::coord()
     return coord_;
 }
 
-unordered_multiset<string>& Documento::tokens()
+unordered_multiset<string>& Documento::tokens() 
 {
     return tokens_;
 }
 
-void Documento::atualiza_doc()
+void Documento::Atualiza_doc()
 {
     string lin,tok;
     int i;

@@ -263,24 +263,24 @@ TEST_SUITE("Testando o método 'freq':")
     }
 }
 
-TEST_CASE("Testando o método 'set_coord':")
+TEST_CASE("Testando o método 'Set_coord':")
 {
     vector<double> v1{1,0.5,-3.2,0.3,-3.7,0};
     vector<double> v2{1.9,2.3,-7.3,0.27,1.2,0.5};
     vector<double> v3{1,2,3,4};
     vector<double> v4,coord;
     Documento d1("Teste"),d2("ok"),d3("d1","docs/doc.txt",1),d4("d2","docs/d2.txt",2);
-    d1.set_coord(v1);
-    d2.set_coord(v2);
-    d3.set_coord(v3);
-    d4.set_coord(v2);
+    d1.Set_coord(v1);
+    d2.Set_coord(v2);
+    d3.Set_coord(v3);
+    d4.Set_coord(v2);
     CHECK(Teste::coord(d1) == v1);
     CHECK(Teste::coord(d2) == v2);
     CHECK(Teste::coord(d3) == v3);
     CHECK(Teste::coord(d4) == v2);
-    d4.set_coord(v1);
+    d4.Set_coord(v1);
     CHECK(Teste::coord(d4) == v1);
-    d1.set_coord(v4);
+    d1.Set_coord(v4);
     CHECK(Teste::coord(d1) == v4);
 }
 
@@ -291,10 +291,10 @@ TEST_CASE("Testando o método 'coord':")
     vector<double> v3{1,2,3,4};
     vector<double> v4,coord;
     Documento d1("Teste"),d2("ok"),d3("d1","docs/doc.txt",1),d4("d2","docs/d2.txt",2);
-    d1.set_coord(v1);
-    d2.set_coord(v2);
-    d3.set_coord(v3);
-    d4.set_coord(v2);
+    d1.Set_coord(v1);
+    d2.Set_coord(v2);
+    d3.Set_coord(v3);
+    d4.Set_coord(v2);
     coord = d1.coord();
     CHECK(coord == v1);
     coord = d2.coord();
@@ -303,10 +303,10 @@ TEST_CASE("Testando o método 'coord':")
     CHECK(coord == v3);
     coord = d4.coord();
     CHECK(coord == v2);
-    d4.set_coord(v1);
+    d4.Set_coord(v1);
     coord = d4.coord();
     CHECK(coord == v1);
-    d1.set_coord(v4);
+    d1.Set_coord(v4);
     coord = d1.coord();
     CHECK(coord == v4);
 }
@@ -320,7 +320,7 @@ TEST_CASE("Testando o método 'tokens':")
     CHECK(d4.tokens() == Teste::tokens(d4));
 }
 
-TEST_SUITE("Testando o método 'atualiza_doc':")
+TEST_SUITE("Testando o método 'Atualiza_doc':")
 {
     TEST_CASE("Alterando documentos sem coordenadas atribuídas:")
     {
@@ -333,7 +333,7 @@ TEST_SUITE("Testando o método 'atualiza_doc':")
         id_old = Teste::id(d1);
         in.open("docs/f3.txt");
         Teste::altera_arq(d1,att1);
-        d1.atualiza_doc();
+        d1.Atualiza_doc();
         CHECK(Teste::nome(d1) == nome_old);
         CHECK(Teste::id(d1) == id_old);
         REQUIRE(Teste::arq_aberto(d1) == true);
@@ -352,7 +352,7 @@ TEST_SUITE("Testando o método 'atualiza_doc':")
         id_old = Teste::id(d2);
         in.open("docs/f1.txt");
         Teste::altera_arq(d2,att2);
-        d2.atualiza_doc();
+        d2.Atualiza_doc();
         CHECK(Teste::nome(d2) == nome_old);
         CHECK(Teste::id(d2) == id_old);
         REQUIRE(Teste::arq_aberto(d2) == true);
@@ -378,10 +378,10 @@ TEST_SUITE("Testando o método 'atualiza_doc':")
         nome_old = Teste::nome(d1);
         id_old = Teste::id(d1);
         in.open("docs/f4.txt");
-        d1.set_coord(v1);
-        d2.set_coord(v2);
+        d1.Set_coord(v1);
+        d2.Set_coord(v2);
         Teste::altera_arq(d1,att1);
-        d1.atualiza_doc();
+        d1.Atualiza_doc();
         CHECK(Teste::nome(d1) == nome_old);
         CHECK(Teste::id(d1) == id_old);
         REQUIRE(Teste::arq_aberto(d1) == true);
@@ -400,7 +400,7 @@ TEST_SUITE("Testando o método 'atualiza_doc':")
         id_old = Teste::id(d2);
         in.open("docs/f2.txt");
         Teste::altera_arq(d2,att2);
-        d2.atualiza_doc();
+        d2.Atualiza_doc();
         CHECK(Teste::nome(d2) == nome_old);
         CHECK(Teste::id(d2) == id_old);
         REQUIRE(Teste::arq_aberto(d2) == true);
@@ -425,7 +425,7 @@ TEST_SUITE("Testando o método 'atualiza_doc':")
         nome_old = Teste::nome(d);
         id_old = Teste::id(d);
         Teste::altera_arq(d,"docs/vazio.txt");
-        d.atualiza_doc();
+        d.Atualiza_doc();
         CHECK(Teste::nome(d) == nome_old);
         CHECK(Teste::id(d) == id_old);
         REQUIRE(Teste::arq_aberto(d) == true);
@@ -437,7 +437,7 @@ TEST_SUITE("Testando o método 'atualiza_doc':")
         nome_old = Teste::nome(vazio);
         id_old = Teste::id(vazio);
         Teste::altera_arq(vazio,"docs/doc.txt");
-        vazio.atualiza_doc();
+        vazio.Atualiza_doc();
         in.open("docs/f1.txt");
         CHECK(Teste::nome(vazio) == nome_old);
         CHECK(Teste::id(vazio) == id_old);
