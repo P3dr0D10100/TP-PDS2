@@ -85,7 +85,7 @@ int Documento::freq(string p)
     return tokens_.count(p);
 }
 
-void Documento::set_coord(vector<double>& V)
+void Documento::Set_coord(vector<double>& V)
 {
     coord_ = V;
 }
@@ -95,11 +95,50 @@ vector<double> Documento::coord()
     return coord_;
 }
 
-unordered_multiset<string>& Documento::tokens()
+unordered_multiset<string>& Documento::tokens() 
 {
     return tokens_;
 }
 
+void Documento::Atualiza_doc()
+{
+    string lin,tok;
+    int i;
+    tokens_.clear();
+    coord_.clear();
+    arquivo_.close();
+    arquivo_.open(dir_);
+    if(!arquivo_.is_open())
+    {
+        throw std::runtime_error("Erro ao acessar o arquivo!");
+    }
+    while(std::getline(arquivo_,lin))
+    {
+        tok.reserve(lin.size());
+        for(i = 0; i <= lin.size(); i++)
+        {
+            if(lin[i] == ' ' || lin[i] == '\0')
+            {
+                tok.shrink_to_fit();
+                if(tok != "")
+                {
+                    tokens_.insert(tok);
+                    tok.clear();
+                    tok.reserve(lin.size() - i);
+                }else
+                {
+                    tok.clear();
+                    tok.reserve(lin.size() - i);
+                }
+            }else 
+            if(isalnum(lin[i]))
+            {
+                tok.push_back(tolower(lin[i]));
+            }
+        }
+        tok.clear();
+    }
+}
 Documento::~Documento()
 {
     arquivo_.close();
