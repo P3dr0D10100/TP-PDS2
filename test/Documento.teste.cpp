@@ -240,6 +240,15 @@ TEST_CASE("Testando o método 'nome':")
     CHECK(d4.nome() == Teste::nome(d4));
 }
 
+TEST_CASE("Testando o método 'id':")
+{
+    Documento d1("Teste"),d2("d1","docs/doc1.txt",0),d3("","docs/vazio.txt",-20),d4("d2","docs/d2.txt",2);
+    CHECK(d1.id() == Teste::id(d1));
+    CHECK(d2.id() == Teste::id(d2));
+    CHECK(d3.id() == Teste::id(d3));
+    CHECK(d4.id() == Teste::id(d4));
+}
+
 TEST_SUITE("Testando o método 'freq':")
 {
     TEST_CASE("doc.txt:")

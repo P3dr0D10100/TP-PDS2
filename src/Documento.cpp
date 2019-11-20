@@ -80,6 +80,11 @@ string Documento::nome()
     return this->nome_;
 }
 
+int Documento::id()
+{
+    return this->id_;
+}
+
 int Documento::freq(string p)
 {
     return tokens_.count(p);
