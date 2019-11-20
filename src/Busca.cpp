@@ -1,5 +1,6 @@
 #include "Busca.h"
 #include <math.h>
+#include <utility>
 #include <algorithm>
 
 MBus::MBus(std::vector<Documento> &doc){
@@ -26,19 +27,30 @@ void MBus::calcula_coord(){
     }
 }
 
-vector <string> MBus::consulta(Documento &Q){
+vector <int> MBus::consulta(Documento &Q){
     Q.tokens();
-    
     vector <double> QW;
     for (auto &t : id_inv_){
-        QW.push_back( log(N_docs_ / t.second.size()) * Qtokens.count(t.first));
+        QW.push_back( log(N_docs_ / t.second.size()) * Q.tokens().count(t.first));
     }
-    vector <double> dist_Q_docs;
+    vector <std::pair<long double,int>> dist_Q_docs;
     for (int i=0; i<docs_.size(); i++){
+        long double soma_coord = 0, soma_q = 0, soma_doc = 0;
+        for (int j=0; j<Q.coord.size(); j++){
+            soma_coord += Q.coord[j] * docs_[i].coord[j];
+            soma_q += Q.coord[j] * Q.coord[j];
+            soma_doc += docs_[i].coord[j] * docs_[i].coord[j];
+        }
+        dist_Q_docs[i] = std::make_pair( soma_coord / (sqrt(soma_q) * sqrt(soma_doc)) , i);
         //calcular distância de Q até docs[i]
     }
     sort (dist_Q_docs.rbegin(), dist_Q_docs.rend());
    
+   vector <int> docs_sorted;
+   for (auto &i : dist_Q_docs){
+       docs_sorted.push_back(i.second);
+   }
+   return docs_sorted;
 }
 
 void MBus::inserir_doc(Documento doc){

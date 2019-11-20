@@ -22,7 +22,7 @@ class MBus{
         //Atualiza o Ã­ndice invertido e as coordenadas.
         void att_doc();
         //Realiza uma busca pela palavra "Q" na base de dados.
-        vector<string> consulta(Documento &Q);
+        vector<int> consulta(Documento &Q);
     private:
         int N_docs_;
         //vector dos documetnos
