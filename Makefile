@@ -7,7 +7,7 @@ all: main Teste
 
 Teste: Teste_busca Teste_doc
 	
-Teste_busca: bin/Busca.o bin/Busca.teste.o
+Teste_busca: bin/Documento.o bin/Busca.o bin/Busca.teste.o 
 	$(CX) $(CX_FLAGS) $^ -o bin/Teste-busca.exe
 
 Teste_doc: bin/Documento.o bin/Documento.teste.o
