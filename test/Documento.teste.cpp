@@ -229,6 +229,42 @@ TEST_SUITE("Testes para o construtor da classe Documento:")
             CHECK(toks == res);
         }
     } 
+    TEST_CASE("Testando o construtor de cópia:")
+    {
+        Documento d1("d1","docs/doc.txt",0),d2("d2","docs/d2.txt",1),d3("Teste"),d4("Query");
+        SUBCASE("Copiando documentos em documentos:")
+        {
+            Documento c1(d1),c2(d2);
+            CHECK(Teste::nome(c1) == Teste::nome(d1));
+            CHECK(Teste::dir(c1) == Teste::dir(d1));
+            CHECK(Teste::id(c1) == Teste::id(d1));
+            CHECK(Teste::arq_aberto(c1) == false);
+            CHECK(Teste::tokens(c1) == Teste::tokens(d1));
+            CHECK(Teste::coord(c1) == Teste::coord(d1));
+            CHECK(Teste::nome(c2) == Teste::nome(d2));
+            CHECK(Teste::dir(c2) == Teste::dir(d2));
+            CHECK(Teste::id(c2) == Teste::id(d2));
+            CHECK(Teste::arq_aberto(c2) == false);
+            CHECK(Teste::tokens(c2) == Teste::tokens(d2));
+            CHECK(Teste::coord(c2) == Teste::coord(d2));
+        }
+        SUBCASE("Copiando 'queries' em documentos:")
+        {
+            Documento c3(d3),c4(d4);
+            CHECK(Teste::nome(c3) == "Query");
+            CHECK(Teste::dir(c3) == "");
+            CHECK(Teste::id(c3) == -1);
+            CHECK(Teste::arq_aberto(c3) == false);
+            CHECK(Teste::tokens(c3) == Teste::tokens(d3));
+            CHECK(Teste::coord(c3) == Teste::coord(d3));
+            CHECK(Teste::nome(c4) == "Query");
+            CHECK(Teste::dir(c4) == "");
+            CHECK(Teste::id(c4) == -1);
+            CHECK(Teste::arq_aberto(c4) == false);
+            CHECK(Teste::tokens(c4) == Teste::tokens(d4));
+            CHECK(Teste::coord(c4) == Teste::coord(d4));
+        }
+    }
 }
 
 TEST_CASE("Testando o método 'nome':")
@@ -460,5 +496,46 @@ TEST_SUITE("Testando o método 'Atualiza_doc':")
         CHECK(Teste::coord(vazio).empty() == true);
         CHECK(Teste::coord(vazio).size() == 0);
         in.close();
+    }
+}
+
+TEST_CASE("Testando o operador '=':")
+{
+    Documento d1("d1","docs/doc.txt",1),d2("d2","docs/d2.txt",2),d3("Teste");
+    SUBCASE("Atribuindo um documento a outro:")
+    {
+        Documento c1("d3","docs/doc1.txt",-2),c2("d4","docs/doc4.txt",3);
+        c1 = d1;
+        c2 = d2;
+        CHECK(Teste::nome(c1) == Teste::nome(d1));
+        CHECK(Teste::dir(c1) == Teste::dir(d1));
+        CHECK(Teste::id(c1) == Teste::id(d1));
+        CHECK(Teste::arq_aberto(c1) == false);
+        CHECK(Teste::tokens(c1) == Teste::tokens(d1));
+        CHECK(Teste::coord(c1) == Teste::coord(d1));
+        CHECK(Teste::nome(c2) == Teste::nome(d2));
+        CHECK(Teste::dir(c2) == Teste::dir(d2));
+        CHECK(Teste::id(c2) == Teste::id(d2));
+        CHECK(Teste::arq_aberto(c2) == false);
+        CHECK(Teste::tokens(c2) == Teste::tokens(d2));
+        CHECK(Teste::coord(c2) == Teste::coord(d2));
+    }
+    SUBCASE("Atribuindo um documento a uma 'query' e uma 'query' a um documento")
+    {
+        Documento c1("Teste"),c2("d3","docs/doc1.txt",-2);
+        c1 = d1;
+        c2 = d3;
+        CHECK(Teste::nome(c1) == Teste::nome(d1));
+        CHECK(Teste::dir(c1) == Teste::dir(d1));
+        CHECK(Teste::id(c1) == Teste::id(d1));
+        CHECK(Teste::arq_aberto(c1) == false);
+        CHECK(Teste::tokens(c1) == Teste::tokens(d1));
+        CHECK(Teste::coord(c1) == Teste::coord(d1));
+        CHECK(Teste::nome(c2) == "Query");
+        CHECK(Teste::dir(c2) == "");
+        CHECK(Teste::id(c2) == -1);
+        CHECK(Teste::arq_aberto(c2) == false);
+        CHECK(Teste::tokens(c2) == Teste::tokens(d3));
+        CHECK(Teste::coord(c2) == Teste::coord(d3));
     }
 }
