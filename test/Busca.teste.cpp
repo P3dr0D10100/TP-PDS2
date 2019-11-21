@@ -15,19 +15,22 @@ class Teste_MBus {
     static vector <Documento> documentos (const MBus &m){
         return m.docs_;
     }
+    static vector <int> consulta ( MBus &m,  Documento &d){
+        return m.consulta(d);
+    }
+    
     
 };
 
 //Este teste apenas habilita o uso da acentuação no windows.
-TEST_CASE("Acentos:")
-{
+TEST_CASE("Acentos:"){
     setlocale(LC_ALL,"Portuguese");
 }
 
 TEST_SUITE("MBus"){
     TEST_CASE("ÍNDICE INVERTIDO, E CONSTRUTOR"){
         Documento um ("", "docs/doc4.txt", 0);
-        Documento dois ("", "docs1/doc5.txt", 1);
+        Documento dois ("", "docs/doc5.txt", 1);
         vector <Documento> DOCS;
         DOCS.push_back(um);
         DOCS.push_back(dois);
@@ -35,7 +38,7 @@ TEST_SUITE("MBus"){
 
         CHECK (Teste_MBus::num_d(teste) == 2);
 
-        // testando índice invertido
+        
         map<string,set<int>> indice_teste {
             make_pair("com", set<int> {0,1}),
             make_pair("de", set<int> {0}),
@@ -56,52 +59,86 @@ TEST_SUITE("MBus"){
 
     TEST_CASE ("CÁLCULO COORDENADAS"){
         Documento um ("", "docs/doc4.txt", 0);
-        Documento dois ("", "docs1/doc5.txt", 1);
+        Documento dois ("", "docs/doc5.txt", 2);
         vector <Documento> DOCS;
         DOCS.push_back(um);
         DOCS.push_back(dois);
         MBus teste (DOCS);
 
         vector<double> coord_doc4 {
-            0,
-            log(2),
+            0.0,
             log(2) * 2,
+            log(2) * 3,
             log(2) * 2,
-            0,
-            0,
+            0.0,
+            0.0,
             log(2) * 2,
-            0,
-            0,
-            0
+            0.0,
+            0.0,
+            0.0
         };
 
         vector<double> coord_doc5{
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
         };
 
-        CHECK (um.coord() == coord_doc4);
-        CHECK (dois.coord() == coord_doc5);  
+        vector <double> u = Teste_MBus::documentos(teste)[0].coord();
+        CHECK (u == coord_doc4);
+        u = Teste_MBus::documentos(teste)[1].coord();
+        CHECK (u == coord_doc5);  
     }
 
-    TEST_CASE ("CONSULTA"){
-        Documento um ("", "docs/doc4.txt", 0);
-        Documento dois ("", "docs1/doc5.txt", 1);
+    TEST_CASE ("CONSULTA 1"){
+        Documento um ("", "docs/doc6.txt", 0);
+        Documento dois ("", "docs/doc7.txt", 2);
+        Documento tres ("" , "docs/doc8.txt", 8);
         vector <Documento> DOCS;
-        DOCS.push_back(um);
         DOCS.push_back(dois);
+        DOCS.push_back(um);
+        DOCS.push_back(tres);
         MBus teste (DOCS);
 
+        Documento q ("Programacao quero teste teste novo");
+
+        vector<int> c = Teste_MBus::consulta(teste, q);
+
+        CHECK (c.size() == 3);
+        CHECK (c[0] == 0);
+        CHECK (c[1] == 2);
+        CHECK (c[2] == 8);
     }
 
+    TEST_CASE ("CONSULTA 2"){
+        Documento um ("", "docs/doc4.txt", 2);
+        Documento dois ("", "docs/doc5.txt", 0);
+        
+        vector <Documento> DOCS;
+        DOCS.push_back(dois);
+        DOCS.push_back(um);
+        
+        MBus teste (DOCS);
+
+        Documento q ("ok");
+
+        vector<int> c = Teste_MBus::consulta(teste, q);
+
+        CHECK (c.size() == 2);
+        CHECK (c[0] == 2);
+        CHECK (c[1] == 0);
+    }
+
+    TEST_CASE ("INSERIR DOCUMENTO EM MBUS VAZIA"){
+        
+    }
    
 
    

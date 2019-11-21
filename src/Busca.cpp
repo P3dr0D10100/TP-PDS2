@@ -30,25 +30,34 @@ void MBus::calcula_coord(){
     }
 }
 
+bool sortinrev(const std::pair<double,int> &a, const std::pair<double,int> &b) { 
+       return (a.first > b.first); 
+} 
+
 vector <int> MBus::consulta(Documento &Q){
     unordered_multiset<string> Q_tokens = Q.tokens();
-    vector <double> QW,Q_coord;
-    Q_coord = Q.coord();
+    vector <double> QW;
     for (auto &t : id_inv_){
         QW.push_back( log(N_docs_ / t.second.size()) * Q_tokens.count(t.first));
     }
+
     vector <std::pair<long double,int>> dist_Q_docs;
     for (int i=0; i<docs_.size(); i++){
         long double soma_coord = 0, soma_q = 0, soma_doc = 0;
-        for (int j=0; j<Q_coord.size(); j++){
-            soma_coord += Q_coord[j] * docs_[i].coord()[j];
-            soma_q += Q_coord[j] * Q_coord[j];
+        for (int j=0; j<QW.size(); j++){
+            soma_coord += QW[j] * docs_[i].coord()[j];
+            soma_q += QW[j] * QW[j];
             soma_doc += docs_[i].coord()[j] * docs_[i].coord()[j];
         }
-        dist_Q_docs[i] = std::make_pair( soma_coord / (sqrt(soma_q) * sqrt(soma_doc)) , i);
+        if (soma_coord == 0.0 or soma_doc == 0.0 or soma_q == 0){
+            dist_Q_docs.push_back( std::make_pair(0.0 , docs_[i].id()) );
+        }
+        else{
+            dist_Q_docs.push_back( std::make_pair( soma_coord / (sqrt(soma_q) * sqrt(soma_doc)) , docs_[i].id()) );
+        }
         //calcular distância de Q até docs[i]
     }
-    sort (dist_Q_docs.rbegin(), dist_Q_docs.rend());
+    sort (dist_Q_docs.begin(), dist_Q_docs.end(), sortinrev);
    
    vector <int> docs_sorted;
    for (auto &i : dist_Q_docs){
