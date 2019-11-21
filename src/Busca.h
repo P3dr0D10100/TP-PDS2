@@ -19,10 +19,12 @@ class MBus{
         void inserir_doc(Documento doc);
         //Remove o documento de nome "doc" da base de dados.
         void remover_doc(string doc);
-        //Atualiza o Ã­ndice invertido e as coordenadas.
+        //Atualiza o índice invertido e as coordenadas.
         void att_doc();
-        //Realiza uma busca pela palavra "Q" na base de dados.
+        //Realiza uma busca pela palavra "Q" na base de dados (Q é inicializada como "Documento").
         vector<int> consulta(Documento &Q);
+        //Retorna o nome do documento de índice "id" na base de dados.
+        string nome_doc(int id);
     private:
         int N_docs_;
         //vector dos documetnos
