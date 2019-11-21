@@ -3,7 +3,9 @@
 #include <utility>
 #include <algorithm>
 
-MBus::MBus(std::vector<Documento> &doc){
+using std::unordered_multiset;
+
+MBus::MBus(std::vector<Documento> doc){
     N_docs_ = doc.size();
     docs_ = doc;
     calcula_id_inv();
@@ -29,18 +31,19 @@ void MBus::calcula_coord(){
 }
 
 vector <int> MBus::consulta(Documento &Q){
-    Q.tokens();
-    vector <double> QW;
+    unordered_multiset<string> Q_tokens = Q.tokens();
+    vector <double> QW,Q_coord;
+    Q_coord = Q.coord();
     for (auto &t : id_inv_){
-        QW.push_back( log(N_docs_ / t.second.size()) * Q.tokens().count(t.first));
+        QW.push_back( log(N_docs_ / t.second.size()) * Q_tokens.count(t.first));
     }
     vector <std::pair<long double,int>> dist_Q_docs;
     for (int i=0; i<docs_.size(); i++){
         long double soma_coord = 0, soma_q = 0, soma_doc = 0;
-        for (int j=0; j<Q.coord.size(); j++){
-            soma_coord += Q.coord[j] * docs_[i].coord[j];
-            soma_q += Q.coord[j] * Q.coord[j];
-            soma_doc += docs_[i].coord[j] * docs_[i].coord[j];
+        for (int j=0; j<Q_coord.size(); j++){
+            soma_coord += Q_coord[j] * docs_[i].coord()[j];
+            soma_q += Q_coord[j] * Q_coord[j];
+            soma_doc += docs_[i].coord()[j] * docs_[i].coord()[j];
         }
         dist_Q_docs[i] = std::make_pair( soma_coord / (sqrt(soma_q) * sqrt(soma_doc)) , i);
         //calcular distância de Q até docs[i]

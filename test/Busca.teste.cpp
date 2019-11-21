@@ -18,6 +18,12 @@ class Teste_MBus {
     
 };
 
+//Este teste apenas habilita o uso da acentuação no windows.
+TEST_CASE("Acentos:")
+{
+    setlocale(LC_ALL,"Portuguese");
+}
+
 TEST_SUITE("MBus"){
     TEST_CASE("ÍNDICE INVERTIDO, E CONSTRUTOR"){
         Documento um ("", "docs/doc4.txt", 0);

@@ -16,6 +16,8 @@ class Documento{
         Documento(string doc,string dir,int id);
         //Inicializa um objeto da classe documento a partir da string "str".
         Documento(string str);
+        //Inicializa o documento como uma c�pia do documento "doc".
+        Documento(const Documento& doc);
         //Retorna o nome do documento atual.
         string nome();
         //Retorna o id único do documento atual.
@@ -31,6 +33,8 @@ class Documento{
         //Atualiza o documento atual (realiza nova leitura).
         //Precondição: o objeto foi criado a partir de um documento.
         void Atualiza_doc();
+        //Implementa o operador = para a classe documento.
+        void operator=(const Documento& doc);
         //Fecha o documento após o uso.
         ~Documento();
     private:
