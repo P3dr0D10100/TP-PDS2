@@ -12,7 +12,7 @@ MBus::MBus(std::vector<Documento> &doc){
 void MBus::calcula_id_inv(){
     for (int i=0; i<docs_.size(); i++){
         for (auto &t : docs_[i].tokens()){
-            id_inv_[t].insert(i);
+            id_inv_[t].insert(docs_[i].id());
         }
     }
 }
@@ -23,7 +23,7 @@ void MBus::calcula_coord(){
         for (auto &t : id_inv_){
             W.push_back( log(N_docs_ / t.second.size()) * d.freq(t.first)); 
         }
-        d.set_coord(W);
+        d.Set_coord(W);
     }
 }
 

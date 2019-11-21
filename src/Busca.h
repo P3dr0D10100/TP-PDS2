@@ -33,7 +33,7 @@ class MBus{
         void calcula_id_inv();
         //Calcula as coordenadas de um documento.
         void calcula_coord();
-    friend class Teste;
+    friend class Teste_MBus;
 };
 
 #endif //BUSCA_H 
