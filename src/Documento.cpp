@@ -75,6 +75,15 @@ Documento::Documento(string str)
     }
 }
 
+Documento::Documento(const Documento& doc)
+{
+    this->nome_ = doc.nome_;
+    this->dir_ = doc.dir_;
+    this->id_ = doc.id_;
+    this->tokens_ = doc.tokens_;
+    this->coord_ = doc.coord_;
+}
+
 string Documento::nome()
 {
     return this->nome_;
@@ -144,6 +153,16 @@ void Documento::Atualiza_doc()
         tok.clear();
     }
 }
+
+void Documento::operator=(const Documento& doc)
+{
+    this->nome_ = doc.nome_;
+    this->dir_ = doc.dir_;
+    this->id_ = doc.id_;
+    this->tokens_ = doc.tokens_;
+    this->coord_ = doc.coord_;
+}
+
 Documento::~Documento()
 {
     arquivo_.close();
