@@ -9,6 +9,7 @@ MBus::MBus(std::vector<Documento> doc){
     N_docs_ = doc.size();
     docs_ = doc;
     calcula_id_inv();
+    calcula_coord();
 } 
 
 void MBus::calcula_id_inv(){
