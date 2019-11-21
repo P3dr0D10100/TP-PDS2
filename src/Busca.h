@@ -14,7 +14,7 @@ using std::vector;
 class MBus{
     public:
         //Constroi uma base de dados com os documentos de docs.
-        MBus(vector<Documento> &docs);
+        MBus(vector<Documento> docs);
         //Insere o documento doc na base de dados.
         void inserir_doc(Documento doc);
         //Remove o documento de nome "doc" da base de dados.
