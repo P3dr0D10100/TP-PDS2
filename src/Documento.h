@@ -18,6 +18,8 @@ class Documento{
         Documento(string str);
         //Retorna o nome do documento atual.
         string nome();
+        //Retorna o id único do documento atual.
+        int id();
         //Retorna a frequência da palavra P no documento atual.
         int freq(string P);
         //Atribui ao documento atual as coordenadas contidas em V.
