@@ -156,6 +156,7 @@ void Documento::Atualiza_doc()
 
 void Documento::operator=(const Documento& doc)
 {
+    this->arquivo_.close();
     this->nome_ = doc.nome_;
     this->dir_ = doc.dir_;
     this->id_ = doc.id_;
