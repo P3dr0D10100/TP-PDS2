@@ -30,24 +30,21 @@ class Teste_MBus {
     
 };
 
-//Habilitando acentuaï¿½ï¿½o no windows
+//Habilitando acentuação no windows
 TEST_CASE("Acentos:")
 {
     LOCAL;
 }
 
 TEST_SUITE("MBus"){
-    TEST_CASE("ï¿½NDICE INVERTIDO, E CONSTRUTOR"){
+    TEST_CASE("Teste do construtor/índice invertido:"){
         Documento um ("", "docs/doc4.txt", 0);
         Documento dois ("", "docs/doc5.txt", 1);
         vector <Documento> DOCS;
         DOCS.push_back(um);
         DOCS.push_back(dois);
         MBus teste (DOCS);
-
         CHECK (Teste_MBus::num_d(teste) == 2);
-
-        
         map<string,set<int>> indice_teste {
             make_pair("com", set<int> {0,1}),
             make_pair("de", set<int> {0}),
@@ -62,18 +59,15 @@ TEST_SUITE("MBus"){
         
         };
         CHECK ( Teste_MBus::indice(teste) == indice_teste );
-
-     
     }
 
-    TEST_CASE ("CÃƒï¿½LCULO COORDENADAS"){
+    TEST_CASE ("Cálculo de coordenadas:"){
         Documento um ("", "docs/doc4.txt", 0);
         Documento dois ("", "docs/doc5.txt", 2);
         vector <Documento> DOCS;
         DOCS.push_back(um);
         DOCS.push_back(dois);
         MBus teste (DOCS);
-
         vector<double> coord_doc4 {
             0.0,
             log(2) * 2,
@@ -86,7 +80,6 @@ TEST_SUITE("MBus"){
             0.0,
             0.0
         };
-
         vector<double> coord_doc5{
             0.0,
             0.0,
@@ -99,14 +92,13 @@ TEST_SUITE("MBus"){
             0.0,
             0.0
         };
-
         vector <double> u = Teste_MBus::documentos(teste)[0].coord();
         CHECK (u == coord_doc4);
         u = Teste_MBus::documentos(teste)[1].coord();
         CHECK (u == coord_doc5);  
     }
 
-    TEST_CASE ("CONSULTA 1"){
+    TEST_CASE ("Realizando consultas:"){
         Documento um ("", "docs/doc6.txt", 0);
         Documento dois ("", "docs/doc7.txt", 2);
         Documento tres ("" , "docs/doc8.txt", 8);
@@ -115,37 +107,29 @@ TEST_SUITE("MBus"){
         DOCS.push_back(um);
         DOCS.push_back(tres);
         MBus teste (DOCS);
-
         Documento q ("Programacao quero teste teste novo");
-
         vector<int> c = Teste_MBus::consulta(teste, q);
-
         CHECK (c.size() == 3);
         CHECK (c[0] == 0);
         CHECK (c[1] == 2);
         CHECK (c[2] == 8);
     }
 
-    TEST_CASE ("CONSULTA 2"){
+    TEST_CASE ("Realizando uma nova consulta:"){
         Documento um ("", "docs/doc4.txt", 2);
         Documento dois ("", "docs/doc5.txt", 0);
-        
         vector <Documento> DOCS;
         DOCS.push_back(dois);
         DOCS.push_back(um);
-        
         MBus teste (DOCS);
-
         Documento q ("ok");
-
         vector<int> c = Teste_MBus::consulta(teste, q);
-
         CHECK (c.size() == 2);
         CHECK (c[0] == 2);
         CHECK (c[1] == 0);
     }
 
-    TEST_CASE ("INSERIR DOCUMENTO"){
+    TEST_CASE ("Inserir documento na máquina de bsuca:"){
         vector <Documento> DOCS;
         MBus teste (DOCS);
         Documento doc("", "docs/doc6.txt", 1);
@@ -158,11 +142,9 @@ TEST_SUITE("MBus"){
         teste_indice["quero"].insert(1);
         teste_indice["acabar"].insert(1);
         teste_indice["logo"].insert(1);
-
         CHECK (Teste_MBus::num_d(teste) == 1);
         CHECK (Teste_MBus::documentos(teste).size() == 1);
         CHECK (Teste_MBus::indice(teste) == teste_indice);
-
         Documento doc1("", "docs/doc7.txt", 3);
         teste.inserir_doc(doc1);
         teste_indice["mais"].insert(3);
@@ -171,14 +153,12 @@ TEST_SUITE("MBus"){
         teste_indice["trabalho"].insert(3);
         teste_indice["programacao"].insert(3);
         teste_indice["final"].insert(3);
-
         CHECK (Teste_MBus::num_d(teste) == 2);
         CHECK (Teste_MBus::documentos(teste).size() == 2);
         CHECK (Teste_MBus::indice(teste) == teste_indice);
-
     }
    
-    TEST_CASE ("REMOVER DOCUMENTO EM MBus - ENCONTRA DOC"){
+    TEST_CASE ("Remover documento válido em máquina de busca:"){
         vector <Documento> DOCS;
         Documento doc("primeiro", "docs/doc6.txt", 1);
         Documento doc1("segundo", "docs/doc7.txt", 3);
@@ -196,10 +176,9 @@ TEST_SUITE("MBus"){
         teste_indice["logo"].insert(1);
         CHECK (Teste_MBus::num_d(teste) == 1);
         CHECK (Teste_MBus::indice(teste) == teste_indice);
-
     }
 
-    TEST_CASE ("REMOVER DOCUMENTO EM MBus - NAO ENCONTRA DOC"){
+    TEST_CASE ("Remover documento inválido na máquina de busca:"){
         vector <Documento> DOCS;
         Documento doc("primeiro", "docs/doc6.txt", 1);
         Documento doc1("segundo", "docs/doc7.txt", 3);
@@ -207,29 +186,25 @@ TEST_SUITE("MBus"){
         DOCS.push_back(doc1);
         MBus teste (DOCS);
         teste.remover_doc("terceiro");
-
         CHECK (Teste_MBus::num_d(teste) == 2);
     }
     
-    TEST_CASE ("REMOVER DOCUMENTO EM MBus VAZIA"){
+    TEST_CASE ("Removendo documento em máquina de busca vazia:"){
         vector <Documento> DOCS;
         MBus teste (DOCS);
         teste.remover_doc("");
         CHECK (Teste_MBus::num_d(teste) == 0);
     }
    
-    TEST_CASE ("NOME DOC"){
+    TEST_CASE ("Testando o método 'nome_doc':"){
         vector <Documento> DOCS;
         Documento doc("primeiro", "docs/doc6.txt", 1);
         Documento doc1("segundo", "docs/doc7.txt", 3);
         DOCS.push_back(doc);
         DOCS.push_back(doc1);
         MBus teste (DOCS);
-
         CHECK (Teste_MBus::nome(teste, 1) == "primeiro");
         CHECK (Teste_MBus::nome(teste, 3) == "segundo");
         CHECK (Teste_MBus::nome(teste, 4) == "");
     }
 }
-
-

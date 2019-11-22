@@ -55,7 +55,7 @@ vector<Documento> init()
     string dir,in,nome,ext;
     vector<string> nomes;
     vector<Documento> Res;
-    cout << "PROGRAMA PARA PESQUISAS EM BANCOS DE DADOS\nDigite um diretório contendo alguns arquivos de texto para inicializar a base de dados: ";
+    cout << "PROGRAMA PARA PESQUISA EM BANCOS DE DADOS\nDigite um diretório contendo alguns arquivos de texto para inicializar a base de dados: ";
     cin >> dir;
     if(dir[dir.size() - 1] == '\\' || dir[dir.size() - 1] == '/' )
     {
@@ -101,7 +101,7 @@ char menu()
 {
     char Res;
     LIMPAR;
-    cout << "PROGRAMA PARA PESQUISAS EM BANCOS DE DADOS\nEscolha uma opção:\n\nA) Realizar pesquisa.\nB) Alterar banco de dados.\nS) Sair.\n\nEntre a letra correspondente à opção desejada: ";
+    cout << "PROGRAMA PARA PESQUISA EM BANCOS DE DADOS\nEscolha uma opção:\n\nA) Realizar pesquisa.\nB) Alterar banco de dados.\nS) Sair.\n\nEntre a letra correspondente à opção desejada: ";
     cin >> Res;
     Res = toupper(Res);
     return Res;
@@ -109,6 +109,7 @@ char menu()
 
 void pesquisa(MBus& maq)
 {
+    int pos = 1;
     string query;
     vector<int> Res;
     LIMPAR;
@@ -120,16 +121,17 @@ void pesquisa(MBus& maq)
     try
     {
         Res = maq.consulta(Q);
-        cout << "Os documentos da base de dados que apresentam os termos \"" << query << "\", em ordem de relevância, são:\n\n"; 
+        cout << "Os documentos da base de dados que apresentam os termos \"" << query << "\", em ordem de relevância, são:\nRanking:\n\nPosição:  Documento:\n"; 
         for(int i : Res)
         {
-            cout << maq.nome_doc(i) << endl;
+            cout << pos << ".        " << maq.nome_doc(i) << endl;
+            pos++;
         }
     }catch(std::invalid_argument& e)
     {
         cout << "Erro: " << e.what() << ".";
     }
-    cout << endl;
+    cout << "\n\n";
     PARA;
 }
 
@@ -166,11 +168,11 @@ void altera_db(MBus& maq)
                 maq.inserir_doc(D);
             }catch(std::invalid_argument& e)
             {
-                cout << "Erro: " << e.what() << ".";
+                cout << "Erro: " << e.what() << "." << endl;
                 PARA;
                 break;
             }
-            cout << "\nDocumento adicionado com sucesso!" << endl;
+            cout << "Documento adicionado com sucesso!" << endl;
             ids++;
             PARA;
             break;
@@ -187,7 +189,7 @@ void altera_db(MBus& maq)
                 PARA;
                 break;
             }
-            cout << "\nDocumento removido com sucesso!" << endl;
+            cout << "Documento removido com sucesso!" << endl;
             PARA;
             break;
         case 'C':

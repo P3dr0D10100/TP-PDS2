@@ -70,8 +70,8 @@ vector <int> MBus::consulta(Documento &Q){
 
 void MBus::inserir_doc(Documento doc){
     for (auto &d : docs_){
-        if (d.id() == doc.id()){
-            return;
+        if (d.nome() == doc.nome()){
+            throw std::invalid_argument("O documento informado já se encontra na base de dados");
         }
     }
     docs_.push_back(doc);
