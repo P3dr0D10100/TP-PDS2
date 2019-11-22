@@ -69,6 +69,11 @@ vector <int> MBus::consulta(Documento &Q){
 }
 
 void MBus::inserir_doc(Documento doc){
+    for (auto &d : docs_){
+        if (d.id() == doc.id()){
+            return;
+        }
+    }
     docs_.push_back(doc);
     N_docs_++;
     for (auto &t : doc.tokens()){
@@ -99,8 +104,7 @@ void MBus::att_doc(){
     calcula_coord();
 }
 
-string MBus::nome_doc(int id)
-{
+string MBus::nome_doc(int id){
     int i;
     for(i = 0; i < docs_.size(); i++)
     {
