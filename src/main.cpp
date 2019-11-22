@@ -52,17 +52,23 @@ int main(int argc,char* argv[])
 vector<Documento> init()
 {
     int i;
-    string dir,in,nome;
+    string dir,in,nome,ext;
     vector<string> nomes;
     vector<Documento> Res;
-    cout << "PROGRAMA PARA PESQUISAS EM BANCOS DE DADOS\nDigite um diretório contendo alguns arquivos de texto (.txt) para inicializar a base de dados: ";
+    cout << "PROGRAMA PARA PESQUISAS EM BANCOS DE DADOS\nDigite um diretório contendo alguns arquivos de texto para inicializar a base de dados: ";
     cin >> dir;
     if(dir[dir.size() - 1] == '\\' || dir[dir.size() - 1] == '/' )
     {
         dir.erase(dir.size() - 1);
     }
-    cout << "Entre, agora, os nomes dos arquivos que estão nesse diretório, separados por vírgulas e sem a extensão (.txt): ";
+    cout << "Entre, agora, os nomes dos arquivos que estão nesse diretório, separados por vírgulas e sem a extensão, caso houver: ";
     cin >> in;
+    cout << "Agora, entre a extensão dos arquivos, caso houver (entre ponto \".\" para nenhuma): ";
+    cin >> ext;
+    if(ext == ".")
+    {
+        ext = "";
+    }
     for(i = 0; i <= in.size(); i++)
     {
         if(in[i] != ',' && in[i] != '\0')
@@ -79,7 +85,7 @@ vector<Documento> init()
     {
         for(string n : nomes)
         {
-            in = dir + "\\" + n + ".txt";
+            in = dir + "\\" + n + ext;
             Res.push_back(Documento(n,in,ids));
             ids++;
         }
@@ -130,9 +136,9 @@ void pesquisa(MBus& maq)
 void altera_db(MBus& maq)
 {
     char opt;
-    string dir,nome,doc;
+    string dir,nome,doc,ext;
     LIMPAR;
-    cout << "Escolha uma opção:\nA) Adicionar um documento.\nB) Remover um documento.\nC) Atualizar a base de dados.\nR) Voltar.\nEntre a letra correspondente à opção desejda: ";
+    cout << "Escolha uma opção:\n\nA) Adicionar um documento.\nB) Remover um documento.\nC) Atualizar a base de dados.\nV) Voltar.\n\nEntre a letra correspondente à opção desejda: ";
     cin >> opt;
     opt = toupper(opt);
     switch(opt)
@@ -145,22 +151,50 @@ void altera_db(MBus& maq)
             {
                 dir.erase(dir.size() - 1);
             }
-            cout << "Entre o nome do documento que deseja adicionar, sem a extensão (.txt): ";
+            cout << "Entre o nome do documento que deseja adicionar, sem a extensão, caso houver: ";
             cin >> nome;
-            doc = dir + "\\" + nome + ".txt";
-            maq.inserir_doc(Documento(nome,dir,ids));
+            cout << "Entre, agora, a extensão do arquivo, caso houver (entre ponto \".\" para nenhuma): ";
+            cin >> ext;
+            if(ext == ".")
+            {
+                ext = "";
+            }
+            doc = dir + "\\" + nome + ext;
+            try
+            {
+                Documento D(nome,doc,ids);
+                maq.inserir_doc(D);
+            }catch(std::invalid_argument& e)
+            {
+                cout << "Erro: " << e.what() << ".";
+                PARA;
+                break;
+            }
+            cout << "\nDocumento adicionado com sucesso!" << endl;
+            ids++;
+            PARA;
             break;
         case 'B':
             LIMPAR;
-            cout << "Entre o nome do documento que deseja remover da base de dados, sem a extensão (.txt): ";
+            cout << "Entre o nome do documento que deseja remover da base de dados, sem a extensão, caso houver: ";
             cin >> nome;
-            maq.remover_doc(nome);
+            try
+            {
+                maq.remover_doc(nome);
+            }catch(std::invalid_argument& e)
+            {
+                cout << "Erro: " << e.what() << "." << endl;
+                PARA;
+                break;
+            }
+            cout << "\nDocumento removido com sucesso!" << endl;
+            PARA;
             break;
         case 'C':
             LIMPAR;
             maq.att_doc();
             break;
-        case 'R':
+        case 'V':
             return;
         default:
             while(opt != 'A' && opt != 'B' && opt != 'C')
