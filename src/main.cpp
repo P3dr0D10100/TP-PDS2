@@ -117,7 +117,6 @@ char menu()
 
 void pesquisa(MBus& maq)
 {
-    int pos = 1;
     string query;
     vector<int> Res;
     LIMPAR;
@@ -129,11 +128,10 @@ void pesquisa(MBus& maq)
     try
     {
         Res = maq.consulta(Q);
-        cout << "Os documentos da base de dados que apresentam os termos \"" << query << "\", em ordem de relevância, são:\nRanking:\n\nPosição:  Documento:\n"; 
+        cout << "Os documentos da base de dados que apresentam os termos \"" << query << "\", em ordem de relevância, são:\n\n"; 
         for(int i : Res)
         {
-            cout << pos << ".        " << maq.nome_doc(i) << endl;
-            pos++;
+            cout << maq.nome_doc(i) << endl;
         }
     }catch(std::invalid_argument& e)
     {
