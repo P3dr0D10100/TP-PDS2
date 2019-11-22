@@ -98,3 +98,16 @@ void MBus::att_doc(){
     calcula_id_inv();
     calcula_coord();
 }
+
+string MBus::nome_doc(int id)
+{
+    int i;
+    for(i = 0; i < docs_.size(); i++)
+    {
+        if(docs_[i].id() == id)
+        {
+            return docs_[i].nome();
+        }
+    }
+    return "";
+}
