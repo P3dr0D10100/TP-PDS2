@@ -1,9 +1,5 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#ifdef _WIN32
 #define LOCAL system("chcp 65001");
-#else
-#define LOCAL
-#endif
 #include "include/doctest.h"
 #include "src/Busca.h"
 #include <utility>

@@ -1,18 +1,11 @@
-#ifdef _WIN32
-#define LIMPAR system("cls")
-#define PARA system("pause")
-#define LOCAL system("chcp 65001")
-#else
-#define LIMPAR system("clear")
-#define PARA cout << "Pressione qualquer tecla para continuar...\n"; getchar()
-#define LOCAL
-#endif
 #include <iostream>
 #include <vector>
 #include <string>
 #include <cctype>
 #include "Busca.h"
-
+#define LIMPAR system("cls")
+#define PARA system("pause")
+#define LOCAL system("chcp 65001")
 
 using std::cout;
 using std::endl;
