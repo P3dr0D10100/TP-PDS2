@@ -102,11 +102,18 @@ void pesquisa(MBus& maq)
     LIMPAR;
     cout << "Entre os termos que deseja pesquisar na base de dados: ";
     cin >> query;
-    Res = maq.consulta(Documento(query));
-    cout << "Resultado:\nOs documentos em que os termos \"" << query << "\" aparecem, ordenados por relevância, são:\n";
-    for(int i: Res)
+    Documento Q(query);
+    try
     {
-        cout << maq.nome_doc(i) << endl;
+        maq.consulta(Q);
+        cout << "Resultado:\nOs documentos em que os termos \"" << query << "\" aparecem, ordenados por relevância, são:\n";
+        for(int i: Res)
+        {
+            cout << maq.nome_doc(i) << endl;
+        }
+    }catch(std::invalid_argument& e)
+    {
+        cout << "Erro: " << e.what() << ".";
     }
     cout << endl;
     PARA;
