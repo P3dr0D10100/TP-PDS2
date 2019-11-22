@@ -30,19 +30,22 @@ void altera_db(MBus& maq);
 int main(int argc,char* argv[])
 {
     LOCAL;
+    LIMPAR;
     char opt;
     vector<Documento> Documentos;
     Documentos = init();
     MBus Maq_bus(Documentos);
-    opt = menu();
-    switch(opt)
+    while(true)
     {
-        case 'A': pesquisa(Maq_bus); break;
-        case 'B': altera_db(Maq_bus); break;
-        case 'S': exit(0);
-        default: cout << "Erro: opção inválida, tente novamente.\n"; PARA; menu();
+        opt = menu();
+        switch(opt)
+        {
+            case 'A': pesquisa(Maq_bus); break;
+            case 'B': altera_db(Maq_bus); break;
+            case 'S': exit(0);
+            default: cout << "Erro: opção inválida, tente novamente.\n"; PARA; menu();
+        }
     }
-    menu();
     return 0;
 }
 
@@ -92,7 +95,7 @@ char menu()
 {
     char Res;
     LIMPAR;
-    cout << "PROGRAMA PARA PESQUISAS EM BANCOS DE DADOS\nEscolha uma opção:\n\nA) Realizar pesquisa.\nB) Alterar banco de dados.\nS) Sair.\nEntre a letra correspondente à opção desejada: ";
+    cout << "PROGRAMA PARA PESQUISAS EM BANCOS DE DADOS\nEscolha uma opção:\n\nA) Realizar pesquisa.\nB) Alterar banco de dados.\nS) Sair.\n\nEntre a letra correspondente à opção desejada: ";
     cin >> Res;
     Res = toupper(Res);
     return Res;
@@ -103,14 +106,16 @@ void pesquisa(MBus& maq)
     string query;
     vector<int> Res;
     LIMPAR;
-    cout << "Entre os termos que deseja pesquisar na base de dados: ";
-    cin >> query;
+    cout << "Entre os termos que deseja pesquisar na base de dados e pressione enter: ";
+    fseek(stdin,0,SEEK_END);
+    std::getline(std::cin,query);
+    LIMPAR;
     Documento Q(query);
     try
     {
-        maq.consulta(Q);
-        cout << "Resultado:\nOs documentos em que os termos \"" << query << "\" aparecem, ordenados por relevância, são:\n";
-        for(int i: Res)
+        Res = maq.consulta(Q);
+        cout << "Os documentos da base de dados que apresentam os termos \"" << query << "\", em ordem de relevância, são:\n\n"; 
+        for(int i : Res)
         {
             cout << maq.nome_doc(i) << endl;
         }
@@ -127,7 +132,7 @@ void altera_db(MBus& maq)
     char opt;
     string dir,nome,doc;
     LIMPAR;
-    cout << "Escolha uma opção:\nA) Adicionar um documento.\nB) Remover um documento.\nC) Atualizar a base de dados.\nEntre a letra correspondente à opção desejda: ";
+    cout << "Escolha uma opção:\nA) Adicionar um documento.\nB) Remover um documento.\nC) Atualizar a base de dados.\nR) Voltar.\nEntre a letra correspondente à opção desejda: ";
     cin >> opt;
     opt = toupper(opt);
     switch(opt)
@@ -155,6 +160,8 @@ void altera_db(MBus& maq)
             LIMPAR;
             maq.att_doc();
             break;
+        case 'R':
+            return;
         default:
             while(opt != 'A' && opt != 'B' && opt != 'C')
             {

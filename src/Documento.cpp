@@ -12,7 +12,7 @@ Documento::Documento(string doc,string dir,int id)
     arquivo_.open(dir_);
     if(!arquivo_.is_open())
     {
-        throw std::invalid_argument("Nome de arquivo ou diretÃ³rio invÃ¡lido.");
+        throw std::invalid_argument("Nome de arquivo ou diretório inválido.");
     }
     assert(arquivo_.is_open());
     while(std::getline(arquivo_,lin))
