@@ -13,6 +13,7 @@ MBus::MBus(std::vector<Documento> doc){
 } 
 
 void MBus::calcula_id_inv(){
+    id_inv_.clear();
     for (int i=0; i<docs_.size(); i++){
         for (auto &t : docs_[i].tokens()){
             id_inv_[t].insert(docs_[i].id());
@@ -70,7 +71,7 @@ void MBus::inserir_doc(Documento doc){
     docs_.push_back(doc);
     N_docs_++;
     for (auto &t : doc.tokens()){
-        id_inv_[t].insert(N_docs_-1);
+        id_inv_[t].insert(doc.id());
     }
     calcula_coord();
 }

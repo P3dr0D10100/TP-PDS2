@@ -2,7 +2,7 @@
 #include "include/doctest.h"
 #include "src/Busca.h"
 #include <utility>
-
+using std::make_pair;
 
 class Teste_MBus {
     public:
@@ -136,11 +136,78 @@ TEST_SUITE("MBus"){
         CHECK (c[1] == 0);
     }
 
-    TEST_CASE ("INSERIR DOCUMENTO EM MBUS VAZIA"){
-        
+    TEST_CASE ("INSERIR DOCUMENTO"){
+        vector <Documento> DOCS;
+        MBus teste (DOCS);
+        Documento doc("", "docs/doc6.txt", 1);
+        teste.inserir_doc(doc);
+        map <string,set<int>> teste_indice;
+        teste_indice["novo"].insert(1);
+        teste_indice["teste"].insert(1);
+        teste_indice["documento"].insert(1);
+        teste_indice["teste"].insert(1);
+        teste_indice["quero"].insert(1);
+        teste_indice["acabar"].insert(1);
+        teste_indice["logo"].insert(1);
+
+        CHECK (Teste_MBus::num_d(teste) == 1);
+        CHECK (Teste_MBus::documentos(teste).size() == 1);
+        CHECK (Teste_MBus::indice(teste) == teste_indice);
+
+        Documento doc1("", "docs/doc7.txt", 3);
+        teste.inserir_doc(doc1);
+        teste_indice["mais"].insert(3);
+        teste_indice["novo"].insert(3);
+        teste_indice["documento"].insert(3);
+        teste_indice["trabalho"].insert(3);
+        teste_indice["programacao"].insert(3);
+        teste_indice["final"].insert(3);
+
+        CHECK (Teste_MBus::num_d(teste) == 2);
+        CHECK (Teste_MBus::documentos(teste).size() == 2);
+        CHECK (Teste_MBus::indice(teste) == teste_indice);
+
     }
    
+    TEST_CASE ("REMOVER DOCUMENTO EM MBus - ENCONTRA DOC"){
+        vector <Documento> DOCS;
+        Documento doc("primeiro", "docs/doc6.txt", 1);
+        Documento doc1("segundo", "docs/doc7.txt", 3);
+        DOCS.push_back(doc);
+        DOCS.push_back(doc1);
+        MBus teste (DOCS);
+        teste.remover_doc("segundo");
+        map <string,set<int>> teste_indice;
+        teste_indice["novo"].insert(1);
+        teste_indice["teste"].insert(1);
+        teste_indice["documento"].insert(1);
+        teste_indice["teste"].insert(1);
+        teste_indice["quero"].insert(1);
+        teste_indice["acabar"].insert(1);
+        teste_indice["logo"].insert(1);
+        CHECK (Teste_MBus::num_d(teste) == 1);
+        CHECK (Teste_MBus::indice(teste) == teste_indice);
 
+    }
+    TEST_CASE ("REMOVER DOCUMENTO EM MBus - NAO ENCONTRA DOC"){
+        vector <Documento> DOCS;
+        Documento doc("primeiro", "docs/doc6.txt", 1);
+        Documento doc1("segundo", "docs/doc7.txt", 3);
+        DOCS.push_back(doc);
+        DOCS.push_back(doc1);
+        MBus teste (DOCS);
+        teste.remover_doc("terceiro");
+
+        CHECK (Teste_MBus::num_d(teste) == 2);
+    }
+    
+
+    TEST_CASE ("REMOVER DOCUMENTO EM MBus VAZIA"){
+        vector <Documento> DOCS;
+        MBus teste (DOCS);
+        teste.remover_doc("");
+        CHECK (Teste_MBus::num_d(teste) == 0);
+    }
    
 }
 
