@@ -58,9 +58,9 @@ vector<Documento> init()
     }
     cout << "Entre, agora, os nomes dos arquivos que estão nesse diretório, separados por vírgulas e sem a extensão (.txt): ";
     cin >> in;
-    for(i = 0; i < in.size(); i++)
+    for(i = 0; i <= in.size(); i++)
     {
-        if(in[i] != ',')
+        if(in[i] != ',' && in[i] != '\0')
         {
             nome.push_back(in[i]);
         }else
@@ -83,6 +83,7 @@ vector<Documento> init()
         cout << "\nErro: " << e.what() << "\nVerifique o diretório e os nomes informados (e as suas formatações) e tente novamente..." << endl;
         PARA;
     }
+    return Res;
 }
 
 char menu()
