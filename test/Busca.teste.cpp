@@ -16,7 +16,7 @@ class Teste_MBus {
     static vector <Documento> documentos (const MBus &m){
         return m.docs_;
     }
-    static vector <int> consulta ( MBus &m,  Documento &d){
+    static vector <int> consulta ( MBus &m,  Documento d){
         return m.consulta(d);
     }
     static string nome (MBus &m, int s){
@@ -94,7 +94,50 @@ TEST_SUITE("MBus"){
         CHECK (u == coord_doc5);  
     }
 
-    TEST_CASE ("Realizando consultas:"){
+    TEST_CASE ("Cálculo de coordenadas 2:"){
+        Documento um ("um", "docs/ex1.txt", 1);
+        Documento dois ("dois", "docs/ex2.txt", 2);
+        Documento tres ("tres", "docs/ex3.txt", 3);
+        Documento quatro ("quatro", "docs/ex4.txt", 4);
+        vector <Documento> DOCS;
+        DOCS.push_back(um);
+        DOCS.push_back(dois);
+        DOCS.push_back(tres);
+        DOCS.push_back(quatro);
+        MBus teste (DOCS);
+
+        vector <double> coord1 {
+            3*(log(4) - log(3)),
+            1*log(2),
+            0
+        };
+        vector <double> coord2 {
+            2.0*(log(4) - log(3)),
+            0,
+            log(4)
+        };
+        vector <double> coord3{
+            2.0*(log(4) - log(3)),
+            0,
+            0
+        };
+        vector <double> coord4{
+            0,
+            2*log(2),
+            0
+        };
+
+        vector <double> u = Teste_MBus::documentos(teste)[0].coord();
+        CHECK (u == coord1);
+        u = Teste_MBus::documentos(teste)[1].coord();
+        CHECK (u == coord2);
+        u = Teste_MBus::documentos(teste)[2].coord();
+        CHECK (u == coord3);
+        u = Teste_MBus::documentos(teste)[3].coord();
+        CHECK (u == coord4);
+    }
+
+    TEST_CASE ("Realizando consulta:"){
         Documento um ("", "docs/doc6.txt", 0);
         Documento dois ("", "docs/doc7.txt", 2);
         Documento tres ("" , "docs/doc8.txt", 8);
@@ -111,7 +154,7 @@ TEST_SUITE("MBus"){
         CHECK (c[2] == 8);
     }
 
-    TEST_CASE ("Realizando uma nova consulta:"){
+    TEST_CASE ("Realizando consulta 2:"){
         Documento um ("", "docs/doc4.txt", 2);
         Documento dois ("", "docs/doc5.txt", 0);
         vector <Documento> DOCS;
@@ -125,7 +168,25 @@ TEST_SUITE("MBus"){
         CHECK (c[1] == 0);
     }
 
-    TEST_CASE ("Inserir documento na máquina de bsuca:"){
+    TEST_CASE ("Realizando consulta 3:"){
+        Documento um ("um", "docs/ex1.txt", 1);
+        Documento dois ("dois", "docs/ex2.txt", 2);
+        Documento tres ("tres", "docs/ex3.txt", 3);
+        Documento quatro ("quatro", "docs/ex4.txt", 4);
+        vector <Documento> DOCS;
+        DOCS.push_back(um);
+        DOCS.push_back(dois);
+        DOCS.push_back(tres);
+        DOCS.push_back(quatro);
+        MBus teste (DOCS);
+        Documento doc("a b");
+        vector <int> teste_consulta { 4,1,2,3 };
+        vector <int> u = Teste_MBus::consulta(teste, doc);
+        CHECK (u ==  teste_consulta );
+
+    }
+
+    TEST_CASE ("Inserir documento na máquina de busca"){
         vector <Documento> DOCS;
         MBus teste (DOCS);
         Documento doc("doc6", "docs/doc6.txt", 1);
@@ -153,7 +214,7 @@ TEST_SUITE("MBus"){
         CHECK (Teste_MBus::documentos(teste).size() == 2);
         CHECK (Teste_MBus::indice(teste) == teste_indice);
     }
-   
+    
     TEST_CASE ("Remover documento válido em máquina de busca:"){
         vector <Documento> DOCS;
         Documento doc("primeiro", "docs/doc6.txt", 1);

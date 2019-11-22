@@ -26,7 +26,7 @@ void MBus::calcula_coord(){
     for (auto &d : docs_){
         vector <double> W;
         for (auto &t : id_inv_){
-            W.push_back( log(N_docs_ / t.second.size()) * d.freq(t.first)); 
+            W.push_back( (log(N_docs_) - log(t.second.size())) * d.freq(t.first)); 
         }
         d.Set_coord(W);
     }
