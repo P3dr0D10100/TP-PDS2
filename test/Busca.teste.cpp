@@ -189,6 +189,7 @@ TEST_SUITE("MBus"){
         CHECK (Teste_MBus::indice(teste) == teste_indice);
 
     }
+
     TEST_CASE ("REMOVER DOCUMENTO EM MBus - NAO ENCONTRA DOC"){
         vector <Documento> DOCS;
         Documento doc("primeiro", "docs/doc6.txt", 1);
@@ -201,7 +202,6 @@ TEST_SUITE("MBus"){
         CHECK (Teste_MBus::num_d(teste) == 2);
     }
     
-
     TEST_CASE ("REMOVER DOCUMENTO EM MBus VAZIA"){
         vector <Documento> DOCS;
         MBus teste (DOCS);
