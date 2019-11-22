@@ -57,7 +57,15 @@ vector<Documento> init()
     vector<Documento> Res;
     cout << "PROGRAMA PARA PESQUISA EM BANCOS DE DADOS\nDigite um diretório contendo alguns arquivos de texto para inicializar a base de dados: ";
     cin >> dir;
-    if(dir[dir.size() - 1] == '\\' || dir[dir.size() - 1] == '/' )
+    //Mudar contra-barras para barras.
+    for(i = 0; i < dir.size(); i++)
+    {
+        if(dir[i] == '\\')
+        {
+            dir[i] = '/';
+        }
+    }
+    if(dir[dir.size() - 1] == '/' )
     {
         dir.erase(dir.size() - 1);
     }
@@ -138,6 +146,7 @@ void pesquisa(MBus& maq)
 void altera_db(MBus& maq)
 {
     char opt;
+    int i;
     string dir,nome,doc,ext;
     LIMPAR;
     cout << "Escolha uma opção:\n\nA) Adicionar um documento.\nB) Remover um documento.\nC) Atualizar a base de dados.\nV) Voltar.\n\nEntre a letra correspondente à opção desejda: ";
@@ -149,7 +158,14 @@ void altera_db(MBus& maq)
             LIMPAR;
             cout << "Entre o diretório que contém o documento que deseja adicionar: ";
             cin >> dir;
-            if(dir[dir.size() - 1] == '\\' || dir[dir.size() - 1] == '/' )
+            for(i = 0; i < dir.size(); i++)
+            {
+                if(dir[i] == '\\')
+                {
+                    dir[i] = '/';
+                }
+            }
+            if(dir[dir.size() - 1] == '/' )
             {
                 dir.erase(dir.size() - 1);
             }
