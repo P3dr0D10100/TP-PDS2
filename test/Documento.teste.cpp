@@ -1,4 +1,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#ifdef _WIN32
+#define LOCAL system("chcp 65001");
+#else
+#define LOCAL
+#endif
 #include "include/doctest.h"
 #include "src/Documento.h"
 
@@ -28,8 +33,8 @@ class Teste{
         {
             return doc.coord_;
         }
-        /*Este método é utilizado para testar a atualização de documentos,
-        a partir da alteração do diretorio do arquivo aberto atualmente na 
+        /*Este mÃ©todo Ã© utilizado para testar a atualizaÃ§Ã£o de documentos,
+        a partir da alteraÃ§Ã£o do diretorio do arquivo aberto atualmente na 
         classe Documento.*/
         static void altera_arq(Documento& doc,const string dir)
         {
@@ -39,10 +44,10 @@ class Teste{
 
 static int ids = 1;
 
-//Este teste apenas habilita o uso da acentuação no windows.
+//Habilitando acentuaÃ§Ã£o no windows
 TEST_CASE("Acentos:")
 {
-    setlocale(LC_ALL,"Portuguese");
+    LOCAL;
 }
 
 TEST_SUITE("Testes para o construtor da classe Documento:")
@@ -63,7 +68,7 @@ TEST_SUITE("Testes para o construtor da classe Documento:")
         CHECK(crd.size() == 0);
         ids++;
     }
-    TEST_CASE("Arquivos não-vazios:")
+    TEST_CASE("Arquivos nÃ£o-vazios:")
     {
         string d,nome,tok;
         ifstream format;
@@ -229,7 +234,7 @@ TEST_SUITE("Testes para o construtor da classe Documento:")
             CHECK(toks == res);
         }
     } 
-    TEST_CASE("Testando o construtor de cópia:")
+    TEST_CASE("Testando o construtor de cÃ³pia:")
     {
         Documento d1("d1","docs/doc.txt",0),d2("d2","docs/d2.txt",1),d3("Teste"),d4("Query");
         SUBCASE("Copiando documentos em documentos:")
@@ -267,7 +272,7 @@ TEST_SUITE("Testes para o construtor da classe Documento:")
     }
 }
 
-TEST_CASE("Testando o método 'nome':")
+TEST_CASE("Testando o mÃ©todo 'nome':")
 {
     Documento d1("Teste"),d2("d1","docs/doc1.txt",1),d3("","docs/vazio.txt",0),d4("d2","docs/d2.txt",2);
     CHECK(d1.nome() == Teste::nome(d1));
@@ -276,7 +281,7 @@ TEST_CASE("Testando o método 'nome':")
     CHECK(d4.nome() == Teste::nome(d4));
 }
 
-TEST_CASE("Testando o método 'id':")
+TEST_CASE("Testando o mÃ©todo 'id':")
 {
     Documento d1("Teste"),d2("d1","docs/doc1.txt",0),d3("","docs/vazio.txt",-20),d4("d2","docs/d2.txt",2);
     CHECK(d1.id() == Teste::id(d1));
@@ -285,7 +290,7 @@ TEST_CASE("Testando o método 'id':")
     CHECK(d4.id() == Teste::id(d4));
 }
 
-TEST_SUITE("Testando o método 'freq':")
+TEST_SUITE("Testando o mÃ©todo 'freq':")
 {
     TEST_CASE("doc.txt:")
     {
@@ -308,7 +313,7 @@ TEST_SUITE("Testando o método 'freq':")
     }
 }
 
-TEST_CASE("Testando o método 'Set_coord':")
+TEST_CASE("Testando o mÃ©todo 'Set_coord':")
 {
     vector<double> v1{1,0.5,-3.2,0.3,-3.7,0};
     vector<double> v2{1.9,2.3,-7.3,0.27,1.2,0.5};
@@ -329,7 +334,7 @@ TEST_CASE("Testando o método 'Set_coord':")
     CHECK(Teste::coord(d1) == v4);
 }
 
-TEST_CASE("Testando o método 'coord':")
+TEST_CASE("Testando o mÃ©todo 'coord':")
 {
     vector<double> v1{1,0.5,-3.2,0.3,-3.7,0};
     vector<double> v2{1.9,2.3,-7.3,0.27,1.2,0.5};
@@ -356,7 +361,7 @@ TEST_CASE("Testando o método 'coord':")
     CHECK(coord == v4);
 }
 
-TEST_CASE("Testando o método 'tokens':")
+TEST_CASE("Testando o mÃ©todo 'tokens':")
 {
     Documento d1("Mais um teste!"),d2("","docs/vazio.txt",0),d3("d1","docs/doc.txt",1),d4("d2","docs/doc1.txt",2);
     CHECK(d1.tokens() == Teste::tokens(d1));
@@ -365,9 +370,9 @@ TEST_CASE("Testando o método 'tokens':")
     CHECK(d4.tokens() == Teste::tokens(d4));
 }
 
-TEST_SUITE("Testando o método 'Atualiza_doc':")
+TEST_SUITE("Testando o mÃ©todo 'Atualiza_doc':")
 {
-    TEST_CASE("Alterando documentos sem coordenadas atribuídas:")
+    TEST_CASE("Alterando documentos sem coordenadas atribuÃ­das:")
     {
         Documento d1("d1","docs/doc1.txt",1),d2("d2","docs/doc3.txt",2);
         string att1 = "docs/d2.txt",att2 = "docs/doc.txt",nome_old,tok;
@@ -412,7 +417,7 @@ TEST_SUITE("Testando o método 'Atualiza_doc':")
         CHECK(Teste::coord(d2).size() == 0);
         in.close();
     }
-    TEST_CASE("Alterando documentos com coordenadas atribuídas:")
+    TEST_CASE("Alterando documentos com coordenadas atribuÃ­das:")
     {
         Documento d1("d1","docs/d2.txt",1),d2("d2","docs/doc.txt",2);
         vector<double> v1{1.2,0.6,-3.4,0},v2{0,0.5,-0.3,0.25};
@@ -459,7 +464,7 @@ TEST_SUITE("Testando o método 'Atualiza_doc':")
         CHECK(Teste::coord(d2).size() == 0);
         in.close();
     }
-    TEST_CASE("Alterações com arquivos vazios:")
+    TEST_CASE("AlteraÃ§Ãµes com arquivos vazios:")
     {
         Documento d("d1","docs/doc.txt",1),vazio("","docs/vazio.txt",0);
         vector<double> v{1,2,3,4};
