@@ -1,4 +1,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#ifdef _WIN32
+#define LOCAL system("chcp 65001");
+#else
+#define LOCAL
+#endif
 #include "include/doctest.h"
 #include "src/Busca.h"
 #include <utility>
@@ -22,13 +27,14 @@ class Teste_MBus {
     
 };
 
-//Este teste apenas habilita o uso da acentua√ß√£o no windows.
-TEST_CASE("Acentos:"){
-    setlocale(LC_ALL,"Portuguese");
+//Habilitando acentuaÁ„o no windows
+TEST_CASE("Acentos:")
+{
+    LOCAL;
 }
 
 TEST_SUITE("MBus"){
-    TEST_CASE("√çNDICE INVERTIDO, E CONSTRUTOR"){
+    TEST_CASE("ÕNDICE INVERTIDO, E CONSTRUTOR"){
         Documento um ("", "docs/doc4.txt", 0);
         Documento dois ("", "docs/doc5.txt", 1);
         vector <Documento> DOCS;
@@ -57,7 +63,7 @@ TEST_SUITE("MBus"){
      
     }
 
-    TEST_CASE ("C√ÅLCULO COORDENADAS"){
+    TEST_CASE ("C√ÉÔøΩLCULO COORDENADAS"){
         Documento um ("", "docs/doc4.txt", 0);
         Documento dois ("", "docs/doc5.txt", 2);
         vector <Documento> DOCS;

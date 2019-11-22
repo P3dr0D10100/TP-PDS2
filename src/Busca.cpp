@@ -2,6 +2,7 @@
 #include <math.h>
 #include <utility>
 #include <algorithm>
+#include <exception>
 
 using std::unordered_multiset;
 
@@ -50,7 +51,7 @@ vector <int> MBus::consulta(Documento &Q){
             soma_q += QW[j] * QW[j];
             soma_doc += docs_[i].coord()[j] * docs_[i].coord()[j];
         }
-        if (soma_coord == 0.0 or soma_doc == 0.0 or soma_q == 0){
+        if (soma_coord == 0.0 || soma_doc == 0.0 || soma_q == 0){
             dist_Q_docs.push_back( std::make_pair(0.0 , docs_[i].id()) );
         }
         else{
@@ -88,7 +89,7 @@ void MBus::remover_doc(string Doc){
         }
     }
     if (achou == false){
-        // mensagem de erro ou alguma coisa
+        throw std::invalid_argument("Os termos informados não puderam ser encontrados na base de dados");
     }
     
 }
@@ -96,4 +97,17 @@ void MBus::remover_doc(string Doc){
 void MBus::att_doc(){
     calcula_id_inv();
     calcula_coord();
+}
+
+string MBus::nome_doc(int id)
+{
+    int i;
+    for(i = 0; i < docs_.size(); i++)
+    {
+        if(docs_[i].id() == id)
+        {
+            return docs_[i].nome();
+        }
+    }
+    return "";
 }

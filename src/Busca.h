@@ -23,7 +23,8 @@ class MBus{
         void att_doc();
         //Realiza uma busca pela palavra "Q" na base de dados (Q é inicializada como "Documento").
         vector<int> consulta(Documento &Q);
-        //Retorna o nome do documento de índice "id" na base de dados.
+        /*Retorna o nome do documento de índice "id" na base de dados. 
+        A função retorna ""  caso o id não seja encontrado.*/
         string nome_doc(int id);
     private:
         int N_docs_;

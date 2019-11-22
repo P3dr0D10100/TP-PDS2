@@ -16,7 +16,7 @@ class Documento{
         Documento(string doc,string dir,int id);
         //Inicializa um objeto da classe documento a partir da string "str".
         Documento(string str);
-        //Inicializa o documento como uma c�pia do documento "doc".
+        //Inicializa o documento como uma cópia do documento "doc".
         Documento(const Documento& doc);
         //Retorna o nome do documento atual.
         string nome();
