@@ -23,18 +23,21 @@ class Teste_MBus {
     static vector <int> consulta ( MBus &m,  Documento &d){
         return m.consulta(d);
     }
+    static string nome (MBus &m, int s){
+        return m.nome_doc(s);
+    } 
     
     
 };
 
-//Habilitando acentuação no windows
+//Habilitando acentuaï¿½ï¿½o no windows
 TEST_CASE("Acentos:")
 {
     LOCAL;
 }
 
 TEST_SUITE("MBus"){
-    TEST_CASE("ÍNDICE INVERTIDO, E CONSTRUTOR"){
+    TEST_CASE("ï¿½NDICE INVERTIDO, E CONSTRUTOR"){
         Documento um ("", "docs/doc4.txt", 0);
         Documento dois ("", "docs/doc5.txt", 1);
         vector <Documento> DOCS;
@@ -195,6 +198,7 @@ TEST_SUITE("MBus"){
         CHECK (Teste_MBus::indice(teste) == teste_indice);
 
     }
+
     TEST_CASE ("REMOVER DOCUMENTO EM MBus - NAO ENCONTRA DOC"){
         vector <Documento> DOCS;
         Documento doc("primeiro", "docs/doc6.txt", 1);
@@ -207,7 +211,6 @@ TEST_SUITE("MBus"){
         CHECK (Teste_MBus::num_d(teste) == 2);
     }
     
-
     TEST_CASE ("REMOVER DOCUMENTO EM MBus VAZIA"){
         vector <Documento> DOCS;
         MBus teste (DOCS);
@@ -215,6 +218,18 @@ TEST_SUITE("MBus"){
         CHECK (Teste_MBus::num_d(teste) == 0);
     }
    
+    TEST_CASE ("NOME DOC"){
+        vector <Documento> DOCS;
+        Documento doc("primeiro", "docs/doc6.txt", 1);
+        Documento doc1("segundo", "docs/doc7.txt", 3);
+        DOCS.push_back(doc);
+        DOCS.push_back(doc1);
+        MBus teste (DOCS);
+
+        CHECK (Teste_MBus::nome(teste, 1) == "primeiro");
+        CHECK (Teste_MBus::nome(teste, 3) == "segundo");
+        CHECK (Teste_MBus::nome(teste, 4) == "");
+    }
 }
 
 
