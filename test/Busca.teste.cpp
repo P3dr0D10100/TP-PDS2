@@ -180,11 +180,48 @@ TEST_SUITE("MBus"){
         DOCS.push_back(quatro);
         MBus teste (DOCS);
         Documento doc("a b");
-        vector <int> teste_consulta { 4,1,2,3 };
+        vector <int> teste_consulta { 4,1,3,2 };
         vector <int> u = Teste_MBus::consulta(teste, doc);
         CHECK (u ==  teste_consulta );
 
     }
+
+    TEST_CASE ("Realizando consulta 4:"){
+        Documento um ("um", "docs/g1.txt", 1);
+        Documento dois ("dois", "docs/g2.txt", 2);
+        Documento tres ("tres", "docs/g3.txt", 3);
+        Documento quatro ("quatro", "docs/g4.txt", 4);
+        vector <Documento> DOCS;
+        DOCS.push_back(um);
+        DOCS.push_back(dois);
+        DOCS.push_back(tres);
+        DOCS.push_back(quatro);
+        MBus teste (DOCS);
+
+        Documento c1("a a");
+        vector <int> teste_consulta { 1, 3, 2, 4 };
+        vector <int> u = Teste_MBus::consulta(teste, c1);
+        CHECK (u ==  teste_consulta );
+
+        Documento c2("b");
+        teste_consulta = { 3, 2, 1, 4 };
+        u = Teste_MBus::consulta(teste, c2);
+        CHECK (u ==  teste_consulta );
+
+        Documento c4("b c");
+        teste_consulta = { 2, 3, 1, 4 };
+        u = Teste_MBus::consulta(teste, c4);
+        CHECK (u ==  teste_consulta );
+
+        Documento c5("d d d a");
+        vector <int> v;
+        v = {4, 1, 3, 2};
+        u = Teste_MBus::consulta(teste, c5);
+        CHECK (u ==  v );
+
+    }
+
+    
 
     TEST_CASE ("Inserir documento na máquina de busca"){
         vector <Documento> DOCS;
