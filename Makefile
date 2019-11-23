@@ -1,6 +1,6 @@
 Project_dir = ${shell cd}
 CX := g++
-CX_FLAGS := -std=c++14 -ggdb -I ${Project_dir}
+CX_FLAGS := -std=c++17 -ggdb -I ${Project_dir}
 
 all: main Teste
 	del bin\*.o
@@ -14,7 +14,7 @@ Teste_doc: bin/Documento.o bin/Documento.teste.o
 	$(CX) $(CX_FLAGS) $^ -o bin/Teste-documento.exe
 
 main: bin/Documento.o bin/Busca.o bin/main.o
-	$(CX) $(CX_FLAGS) $^ -o bin/main.exe
+	$(CX) $(CX_FLAGS) $^ -lstdc++fs -lktmw32 -o bin/main.exe
 
 run: main
 	cls

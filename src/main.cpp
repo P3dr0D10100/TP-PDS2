@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <cctype>
+#include <experimental/filesystem>
 #include "Busca.h"
 #define LIMPAR system("cls")
 #define PARA system("pause")
@@ -13,12 +14,15 @@ using std::cin;
 using std::string;
 using std::vector;
 
+namespace fs = std::experimental::filesystem;
+
 static int ids;
 
 vector<Documento> init();
 char menu();
 void pesquisa(MBus& maq);
 void altera_db(MBus& maq);
+string get_nome(string in,string path);
 
 int main(int argc,char* argv[])
 {
@@ -44,57 +48,32 @@ int main(int argc,char* argv[])
 
 vector<Documento> init()
 {
-    int i;
-    string dir,in,nome,ext;
-    vector<string> nomes;
+    string dir,nome,fpath;
     vector<Documento> Res;
     cout << "PROGRAMA PARA PESQUISA EM BANCOS DE DADOS\nDigite um diretório contendo alguns arquivos de texto para inicializar a base de dados: ";
     cin >> dir;
-    //Mudar contra-barras para barras.
-    for(i = 0; i < dir.size(); i++)
-    {
-        if(dir[i] == '\\')
-        {
-            dir[i] = '/';
-        }
-    }
-    if(dir[dir.size() - 1] == '/' )
-    {
-        dir.erase(dir.size() - 1);
-    }
-    cout << "Entre, agora, os nomes dos arquivos que estão nesse diretório, separados por vírgulas e sem a extensão, caso houver: ";
-    cin >> in;
-    cout << "Agora, entre a extensão dos arquivos, caso houver (entre ponto \".\" para nenhuma): ";
-    cin >> ext;
-    if(ext == ".")
-    {
-        ext = "";
-    }
-    for(i = 0; i <= in.size(); i++)
-    {
-        if(in[i] != ',' && in[i] != '\0')
-        {
-            nome.push_back(in[i]);
-        }else
-        {
-            nomes.push_back(nome);
-            nome.clear();
-        }
-    }
-    in.clear();
     try
     {
-        for(string n : nomes)
-        {
-            in = dir + "\\" + n + ext;
-            Res.push_back(Documento(n,in,ids));
+        fs::path D(dir),F;
+        for(auto file : fs::recursive_directory_iterator(D))
+        {   
+            F = file.path();
+            fpath = F.string();
+            nome = get_nome(fpath,D.string());
+            Res.push_back(Documento(nome,fpath,ids));
             ids++;
         }
+    }catch(fs::filesystem_error& e)
+    {
+        cout << "Erro: ocorreu um erro ao acessar o diretório especificado." << endl;
+        PARA;
     }catch(std::invalid_argument& e)
     {
-        cout << "\nErro: " << e.what() << "\nVerifique o diretório e os nomes informados (e as suas formatações) e tente novamente..." << endl;
+        cout << "Erro: " << e.what() << "." << endl;
         PARA;
     }
+    cout << "Base de dados inicializada com sucesso!" << endl;
+    PARA;
     return Res;
 }
 
@@ -138,7 +117,8 @@ void altera_db(MBus& maq)
 {
     char opt;
     int i;
-    string dir,nome,doc,ext;
+    string dir,nome,doc,ext,in;
+    vector<string> nomes;
     LIMPAR;
     cout << "Escolha uma opção:\n\nA) Adicionar um documento.\nB) Remover um documento.\nC) Atualizar a base de dados.\nV) Voltar.\n\nEntre a letra correspondente à opção desejda: ";
     cin >> opt;
@@ -147,45 +127,49 @@ void altera_db(MBus& maq)
     {
         case 'A':
             LIMPAR;
-            cout << "Entre o diretório que contém o documento que deseja adicionar: ";
+            cout << "Entre o diretório que contém o(s) documento(s) que deseja adicionar: ";
             cin >> dir;
-            for(i = 0; i < dir.size(); i++)
-            {
-                if(dir[i] == '\\')
-                {
-                    dir[i] = '/';
-                }
-            }
             if(dir[dir.size() - 1] == '/' )
             {
                 dir.erase(dir.size() - 1);
             }
-            cout << "Entre o nome do documento que deseja adicionar, sem a extensão, caso houver: ";
-            cin >> nome;
-            cout << "Entre, agora, a extensão do arquivo, caso houver (entre ponto \".\" para nenhuma): ";
+            cout << "Entre os nomes dos documentos que deseja adicionar, sem a extensão, caso houver, separados por vírgulas (ou apenas um único nome): ";
+            cin >> in;
+            cout << "Entre, agora, a extensão dos arquivos, caso houver (entre ponto \".\" para nenhuma): ";
             cin >> ext;
-            if(ext == ".")
+            for(i = 0; i < in.size() + 1; i++)
             {
-                ext = "";
+                if(in[i] != ',' && in[i] != '\0')
+                {
+                    nome.push_back(in[i]);
+                }else
+                {
+                    nomes.push_back(nome);
+                    nome.clear();
+                }
             }
-            doc = dir + "\\" + nome + ext;
+            in.clear();
             try
             {
-                Documento D(nome,doc,ids);
-                maq.inserir_doc(D);
+                for(string n : nomes)
+                {
+                    in = dir + "\\" + n + ext;
+                    Documento D(n,in,ids);
+                    maq.inserir_doc(D);
+                    ids++;
+                }
             }catch(std::invalid_argument& e)
             {
                 cout << "Erro: " << e.what() << "." << endl;
                 PARA;
                 break;
             }
-            cout << "Documento adicionado com sucesso!" << endl;
-            ids++;
+            cout << "Documento(s) inserido(s) com sucesso na base de dados!" << endl;
             PARA;
             break;
         case 'B':
             LIMPAR;
-            cout << "Entre o nome do documento que deseja remover da base de dados, sem a extensão, caso houver: ";
+            cout << "Entre o nome do documento que deseja remover da base de dados, com a extensão, caso houver: ";
             cin >> nome;
             try
             {
@@ -213,4 +197,15 @@ void altera_db(MBus& maq)
                 opt = toupper(opt);
             }
     }   
+}
+
+string get_nome(string in,string path)
+{
+    string res;
+    int i;
+    for(i = path.size() + 1; i < in.size(); i++)
+    {
+        res.push_back(in[i]);
+    }
+    return res;
 }
