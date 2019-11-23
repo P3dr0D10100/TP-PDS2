@@ -3,6 +3,7 @@
 #include <string>
 #include <cctype>
 #include <experimental/filesystem>
+#include <chrono>
 #include "Busca.h"
 #define LIMPAR system("cls")
 #define PARA system("pause")
@@ -13,6 +14,7 @@ using std::endl;
 using std::cin;
 using std::string;
 using std::vector;
+using std::chrono::system_clock;
 
 namespace fs = std::experimental::filesystem;
 
@@ -31,7 +33,12 @@ int main(int argc,char* argv[])
     char opt;
     vector<Documento> Documentos;
     Documentos = init();
+    auto inicio = system_clock::now();
     MBus Maq_bus(Documentos);
+    auto fim = system_clock::now();
+    auto tempo = std::chrono::duration_cast<std::chrono::milliseconds>(fim - inicio);
+    cout << "Base de dados inicializada com sucesso em " << tempo.count()/1000 << " segundos." << endl;
+    PARA;
     while(true)
     {
         opt = menu();
@@ -52,6 +59,7 @@ vector<Documento> init()
     vector<Documento> Res;
     cout << "PROGRAMA PARA PESQUISA EM BANCOS DE DADOS\nDigite um diretório contendo alguns arquivos de texto para inicializar a base de dados: ";
     cin >> dir;
+    auto inicio = system_clock::now();
     try
     {
         fs::path D(dir),F;
@@ -72,8 +80,6 @@ vector<Documento> init()
         cout << "Erro: " << e.what() << "." << endl;
         PARA;
     }
-    cout << "Base de dados inicializada com sucesso!" << endl;
-    PARA;
     return Res;
 }
 
@@ -91,19 +97,35 @@ void pesquisa(MBus& maq)
 {
     string query;
     vector<int> Res;
+    int quant,i;
     LIMPAR;
     cout << "Entre os termos que deseja pesquisar na base de dados e pressione enter: ";
     fseek(stdin,0,SEEK_END);
     std::getline(std::cin,query);
+    cout << "Entre a quantidade de documentos que você deseja ver no resultado (entre -1 para ver todos): ";
+    cin >> quant;
+    while(quant <= 0 && quant != -1)
+    {
+        cout << "Quantidade inválida. Por favor, entre uma quantidade válida de resultados que deseja exibir: ";
+        cin >> quant;
+    }
     LIMPAR;
+    auto inicio = system_clock::now();
     Documento Q(query);
     try
     {
         Res = maq.consulta(Q);
-        cout << "Os documentos da base de dados que apresentam os termos \"" << query << "\", em ordem de relevância, são:\n\n"; 
-        for(int i : Res)
+        auto fim = system_clock::now();
+        if(quant == -1)
         {
-            cout << maq.nome_doc(i) << endl;
+            quant = Res.size();
+        }
+        auto tempo = std::chrono::duration_cast<std::chrono::milliseconds>(fim - inicio);
+        cout << "Os documentos da base de dados que apresentam os termos \"" << query << "\", em ordem de relevância, são:" << endl; 
+        cout << "Exibindo " << quant << " resultados encontrados em " << (double) tempo.count()/1000 << " segundos:\n\n";
+        for(i = 0; i < quant; i++)
+        {
+            cout << maq.nome_doc(Res[i]) << endl;
         }
     }catch(std::invalid_argument& e)
     {

@@ -65,18 +65,8 @@ vector <int> MBus::consulta(Documento &Q){
     sort (dist_Q_docs.begin(), dist_Q_docs.end(), sortinrev);
    
    vector <int> docs_sorted;
-   
-   /*for (auto &i : dist_Q_docs){
-       docs_sorted.push_back(i.second);
-   }
-   */
-   int cont = 0;
    for (auto &i : dist_Q_docs){
        docs_sorted.push_back(i.second);
-       cont ++;
-       if (cont > 100){
-            break;
-       }
    }
    return docs_sorted;
 }
